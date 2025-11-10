@@ -7,9 +7,9 @@
 
 ---
 ## 1. Executive Summary
-- Fork the web interface into an LP-only shell branded for **AEGIS** and focused on **Uniswap v4** flows.
+- Fork the web interface into an LP-only shell that can be branded for **AEGIS**, **The Deep**, or future partners while staying focused on **Uniswap v4** flows.
 - Strip nonessential routes (swap, explore, portfolio, passkeys, Toucan) to shrink bundle size and reduce maintenance.
-- Inject a white-label theming/branding layer so AEGIS styles and copy are applied via configuration rather than code edits.
+- Inject a white-label theming/branding layer so AEGIS, The Deep, or any downstream brand styles and copy are applied via configuration rather than code edits.
 - First supported network is **Kraken INK (chain id 57073)** using the provided PoolManager/Router/etc. addresses; architecture should make adding more chains trivial.
 - Maintain compatibility with upstream shared packages (`packages/ui`, `packages/uniswap`, `@universe/*`) to ease future merges and security patches.
 - Keep telemetry, analytics, and feature-flag hooks plumbed but default-disabled so we can re-enable later without refactoring.
@@ -19,7 +19,7 @@
 ## 2. Goals & Non-Goals
 ### Goals
 1. Deliver a simplified LP-only experience (create pool, add/remove liquidity, view/manage v4 positions) with wallet + network management.
-2. Provide a brand configuration layer (tokens, logos, copy, favicons) that can be overridden via a single package/env flag.
+2. Provide a brand configuration layer (tokens, logos, copy, favicons) that can be overridden via a single package/env flag to switch between **AEGIS**, **The Deep**, or any custom brand with zero code edits.
 3. Add INK chain support with correct RPC endpoints, explorers, gas config, and v4 contract addresses.
 4. Establish maintainable CI, testing, and upstream sync practices for the forked repo.
 
@@ -31,7 +31,7 @@
 ---
 ## 3. Success Criteria
 - LP-only navigation with working flows: create v4 pool, add liquidity, view position, remove liquidity, claim fees.
-- AEGIS brand applied purely via configuration (no manual CSS overrides); theme switch demoable at runtime.
+- Branded experiences (AEGIS, The Deep, or any registered profile) applied purely via configuration (no manual CSS overrides); theme switch demoable at runtime.
 - INK chain registered and selected by default; Playwright smoke validates the end-to-end flow on INK RPC/fork.
 - CI pipeline runs `bun g:typecheck`, `bun g:lint`, `bun g:test`, `bun web build:production`, and Playwright LP smoke on every PR.
 - Repo documents GPLv3 obligations, brand config usage, and INK onboarding instructions.
@@ -102,7 +102,7 @@ Key points:
 - Create `packages/brand-config` exporting:
   ```ts
   export interface BrandTokens {
-    name: 'uniswap' | 'aegis'
+    name: 'uniswap' | 'aegis' | 'the-deep' | (string & {})
     theme: {
       colorsLight: Record<string, string>
       colorsDark: Record<string, string>
@@ -122,8 +122,9 @@ Key points:
     telemetry: { enabled: boolean }
   }
   ```
-- Provide default (`uniswap`) and `aegis` implementations plus a sample `brand.config.json` for overrides.
-- Expose helper `resolveBrand()` that reads `process.env.AEGIS_BRAND` or falls back to default.
+- Provide default (`uniswap`), `aegis`, and `the-deep` implementations plus a sample `brand.config.json` for overrides that can define additional partner brands.
+- Expose helper `resolveBrand()` that reads `process.env.AEGIS_BRAND` (e.g., `AEGIS_BRAND=the-deep`) or falls back to default, and allow the helper to ingest a JSON/YAML profile supplied at deploy time so re-branding never requires a compile or code change.
+- Document that assets/tokens/copy live entirely inside the brand profile so a new partner only needs to drop a config file + asset bundle and set the env flag.
 
 ### 6.2 Tamagui Integration
 - In `apps/web/src/app/Providers.tsx`, call `resolveBrand()` before `createTamagui`. Merge brand tokens into `packages/ui/src/theme/color/colors` and `themes.ts`.
@@ -134,6 +135,12 @@ Key points:
 - Use brand assets for navbar logo, favicon (`vite.config`), `index.html` meta tags.
 - Store copy overrides (hero text, CTA labels) in brand config and reference them in LP screens.
 - Maintain WCAG AA contrast by linting tokens via a simple script (e.g., `scripts/verify-brand-contrast.ts`).
+
+### 6.4 Zero-Code Brand Activation
+- Ship a `docs/BRANDING.md` playbook that walks through adding a new brand profile (e.g., `the-deep`) by copying `brand.config.example.json`, updating asset paths, and setting `AEGIS_BRAND=<profile>`.
+- Ensure CI + `bun web dev --brand <profile>` can hot-swap between `uniswap`, `aegis`, and `the-deep` without rebuilding so stakeholders can verify theming live.
+- During build/deploy, point the hosting layer at the desired `brand.config.json` blob (S3, KV, etc.). `resolveBrand()` must read from that artifact at startup so rebrands require only config/file changes.
+- Provide smoke Playwright coverage that boots each bundled brand profile and asserts logo + hero copy swap, guaranteeing white-label readiness stays healthy.
 
 ---
 ## 7. INK Network Enablement
