@@ -85,7 +85,13 @@ Key points:
 - Keep `multichain`, `transactions`, `user`, `wallet`, and `lp` contexts; update selectors to assume v4-only.
 - Delete translation keys referenced exclusively by removed surfaces; run `bun i18n:extract` afterward.
 
-### 5.3 Dependencies
+### 5.3 Dynamic Fee Hook Defaults
+- Make the **AEGIS Dynamic Fee Manager (DFM) hook** the only option when creating new pools. The Create Position flow should no longer expose raw fee tiers; instead it automatically deploys v4 pools with the DFM hook attached, and later can swap to the **AEGIS Liquidity Engine hook** via config.
+- Store the hook address (and any calldata required by PoolManager) in brand-config so switching from DFM → Liquidity Engine is a small configuration change rather than a UI rewrite.
+- Update creation/transaction contexts to inject the hook parameters into `PoolManager.createAndInitialize` and subsequent `modifyLiquidities` calls, ensuring all pools minted via this UI inherit the dynamic fee logic without extra user steps.
+- Retain read-only support for non-AEGIS pools (positions imported from elsewhere), but mark them as “external” and disable pool-creation actions to avoid accidental deployments without the default hook.
+
+### 5.4 Dependencies
 - Trim `apps/web/package.json` dev/prod deps: drop cypress, Toucan, passkey modules, swap-specific libraries.
 - Update Nx targets: remove swap/anvil-specific commands; add `lp:e2e` pointing to the new Playwright spec.
 - Document new dev commands in README (e.g., `bun aegis dev`, `bun lp:e2e`).
@@ -156,6 +162,12 @@ Key points:
       symbol: 'WINK',
       address: '0x...'(TBD),
     },
+    defaultPoolHook: {
+      label: 'AEGIS Dynamic Fee Manager',
+      address: '0xHOOK_DFM_ADDRESS',
+      type: 'dynamic-fee',
+      // allows future switch to Liquidity Engine without UI surgery
+    },
     v4Addresses: {
       poolManager: '0x360e68faccca8ca495c1b759fd9eee466db9fb32',
       positionDescriptor: '0x42e3ccd9b7f67b5b2ee0c12074b84ccf2a8e7f36',
@@ -179,7 +191,8 @@ Key points:
 
 ### 7.4 Testing
 - Add Playwright fixtures pointing to an INK fork (Anvil/Hardhat) seeded with tokens.
-- Unit tests verifying `getChainInfo(57073)` returns v4 addresses and `supportsV4` true.
+- Unit tests verifying `getChainInfo(57073)` returns v4 addresses, `supportsV4` true, and injects `defaultPoolHook` metadata.
+- Regression tests asserting that pool-creation transactions always include the configured hook address (e.g., inspect emitted `PoolCreated` events in forked-playwright runs).
 
 ---
 ## 8. Telemetry, Feature Flags, and Security
@@ -250,3 +263,4 @@ Key points:
 5. **Hardened UX:** Statsig gating, multi-language packs, growth analytics, and experimental modules are removed or stubbed to keep required features always-on. We preserve critical safety rails—token blocklists, Permit2/approval safeguards, warnings for low liquidity or extreme price ranges, and structured error handling for RPC failures—so the UI remains safe despite reduced surface area.
 6. **Sync strategy:** We fork from the latest public Universe release, keep `upstream/main` as a clean baseline, and isolate all AEGIS deltas (theme config, INK chain entry, route pruning) so merges boil down to reapplying a small, well-documented patch set. CI (Bun/Nx) enforces lint/type/test/build/Playwright on every PR so divergences are caught early.
 7. **Risk-managed rollout:** The WBS phases (audit → de-scope → theming → INK wiring → testing) each include explicit acceptance criteria and mitigations (e.g., verifying contract addresses via read calls, fallback to ERC20 approve when Permit2 absent, providing guidance for wallet network switching). “Done” requires a Playwright-validated end-to-end LP flow on INK plus CI green and documentation updated for GPL attribution and brand config usage.
+8. **Default hook requirement:** Pool creation is hard-wired to attach the AEGIS Dynamic Fee Manager hook (and later, the Liquidity Engine) so every pool launched from this interface inherits the dynamic fee behavior automatically; the UI no longer asks users to pick fee tiers, reducing footguns and guaranteeing hook adoption.
