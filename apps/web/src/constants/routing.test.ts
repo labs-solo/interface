@@ -27,5 +27,9 @@ describe('Routing', () => {
       const symbols = COMMON_BASES[UniverseChainId.Bnb].map((coin) => coin.currency.symbol)
       expect(symbols).toEqual(['BNB', 'DAI', 'USDC', 'USDT', 'WETH', 'BUSD'])
     })
+    it('contains all coins for ink', () => {
+      const symbols = COMMON_BASES[UniverseChainId.Ink].map((coin) => coin.currency.symbol)
+      expect(symbols).toEqual(['INK', 'WETH', 'USDC', 'USDC.e', 'USDT0', 'oUSDT', 'frxUSD', 'VELO', 'OP'])
+    })
   })
 })

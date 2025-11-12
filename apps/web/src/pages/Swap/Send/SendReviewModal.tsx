@@ -132,9 +132,7 @@ export function SendReviewModalInner({ onConfirm, isConfirming }: SendModalInner
           <SendModalHeader
             header={primaryInputView}
             subheader={secondaryInputView}
-            image={
-              <PortfolioLogo currencies={[inputCurrency]} size={36} chainId={chainId ?? UniverseChainId.Ink} />
-            }
+            image={<PortfolioLogo currencies={[inputCurrency]} size={36} chainId={chainId ?? UniverseChainId.Ink} />}
           />
           <SendModalHeader
             label={capitalize(t('common.to'))}

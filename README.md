@@ -26,6 +26,12 @@ The UI defaults to the Kraken INK network. Provide the RPC + contract addresses 
 | Fallback RPC endpoint  | `REACT_APP_INK_RPC_FALLBACK`       | `INK_RPC_FALLBACK`       |
 | Wrapped stable address | `REACT_APP_INK_STABLECOIN_ADDRESS` | `INK_STABLECOIN_ADDRESS` |
 | Default v4 hook        | `REACT_APP_INK_DEFAULT_POOL_HOOK_ADDRESS` | `INK_DEFAULT_POOL_HOOK_ADDRESS` |
+| Ink token list URL     | `REACT_APP_INK_TOKEN_LIST_URL`     | `INK_TOKEN_LIST_URL`     |
+| Token list fallback URL| `REACT_APP_INK_TOKEN_LIST_FALLBACK_URL` | `INK_TOKEN_LIST_FALLBACK_URL` |
+| Token list default chains | `REACT_APP_TOKEN_LIST_DEFAULT_CHAIN_IDS` | `TOKEN_LIST_DEFAULT_CHAIN_IDS` |
+
+If the token list variables are omitted, the apps load the bundled `/tokenlists/ink.velodrome.json` artifact and
+autodetect Ink (`57073`) as a default chain for curated lists.
 
 At minimum set the primary RPC to a public HTTPS endpoint (for example `https://rpc.kraken.com/ink`). The stablecoin + hook addresses are used whenever the UI builds calldata for INK, so point them at the canonical contracts deployed for your environment.
 

@@ -32,10 +32,7 @@ export function SendFormModal(props: SendFormModalProps) {
   const chainId = getChainIdFromChainUrlParam(chainParam)
   const inputCurrencyParam = searchParams.get('sendCurrency') ?? undefined
   const parsedInputCurrency = useCurrency({ address: inputCurrencyParam, chainId })
-  const inputCurrency = useMemo(
-    () => parsedInputCurrency ?? nativeOnChain(UniverseChainId.Ink),
-    [parsedInputCurrency],
-  )
+  const inputCurrency = useMemo(() => parsedInputCurrency ?? nativeOnChain(UniverseChainId.Ink), [parsedInputCurrency])
 
   return (
     <Trace page={InterfacePageName.Send}>

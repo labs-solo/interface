@@ -100,8 +100,8 @@ describe('orderedTransportUrls', () => {
     const expected = Array.from(
       new Set(
         [
-          ...(inkChain.rpcUrls.interface?.http ?? []),
-          ...(inkChain.rpcUrls.default?.http ?? []),
+          ...inkChain.rpcUrls.interface.http,
+          ...inkChain.rpcUrls.default.http,
           ...(inkChain.rpcUrls.public?.http ?? []),
           ...(inkChain.rpcUrls.fallback?.http ?? []),
         ].filter((url): url is string => Boolean(url)),

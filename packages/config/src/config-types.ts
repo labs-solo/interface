@@ -24,6 +24,8 @@ export interface Config {
   inkRpcFallback: string
   inkStablecoinAddress: string
   inkDefaultPoolHookAddress: string
+  inkTokenListUrl: string
+  inkTokenListFallbackUrl: string
   includePrototypeFeatures: string
   infuraKey: string
   jupiterProxyUrl: string
@@ -38,6 +40,7 @@ export interface Config {
   tradingApiWebTestEnv: string
   uniswapApiKey: string
   unitagsApiUrlOverride: string
+  tokenListDefaultChainIds: string
   walletConnectProjectId: string
   walletConnectProjectIdBeta: string
   walletConnectProjectIdDev: string

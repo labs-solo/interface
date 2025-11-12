@@ -93,9 +93,7 @@ export function FiatOnRampProvider({ children }: { children: React.ReactNode }):
   })
 
   // We hardcode ETH as the default starting currency if not specified by modal state's prefilledCurrency
-  const ethCurrencyInfo = useCurrencyInfo(
-    buildCurrencyId(UniverseChainId.Ink, getNativeAddress(UniverseChainId.Ink)),
-  )
+  const ethCurrencyInfo = useCurrencyInfo(buildCurrencyId(UniverseChainId.Ink, getNativeAddress(UniverseChainId.Ink)))
   const defaultCurrency = useMemo(
     () => ({
       currencyInfo: ethCurrencyInfo,

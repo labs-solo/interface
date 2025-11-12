@@ -58,11 +58,7 @@ export function isL2ChainId(chainId?: UniverseChainId): boolean {
 }
 
 export function isMainnetChainId(chainId?: UniverseChainId): boolean {
-  return (
-    chainId === UniverseChainId.Mainnet ||
-    chainId === UniverseChainId.Ink ||
-    chainId === UniverseChainId.Sepolia
-  )
+  return chainId === UniverseChainId.Mainnet || chainId === UniverseChainId.Ink || chainId === UniverseChainId.Sepolia
 }
 
 export function toGraphQLChain(chainId: UniverseChainId): GqlChainId {

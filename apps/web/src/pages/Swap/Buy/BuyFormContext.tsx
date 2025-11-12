@@ -117,9 +117,7 @@ function useDerivedBuyFormInfo(state: BuyFormState): BuyInfo {
     exactCurrency: state.quoteCurrency?.currencyInfo?.currency,
   })
 
-  const accountAddress = useActiveAddress(
-    state.quoteCurrency?.currencyInfo?.currency.chainId ?? UniverseChainId.Ink,
-  )
+  const accountAddress = useActiveAddress(state.quoteCurrency?.currencyInfo?.currency.chainId ?? UniverseChainId.Ink)
   const balance = useCurrencyBalance(accountAddress, state.quoteCurrency?.currencyInfo?.currency)
 
   const { meldSupportedFiatCurrency, notAvailableInThisRegion } = useMeldFiatCurrencyInfo(state.selectedCountry)

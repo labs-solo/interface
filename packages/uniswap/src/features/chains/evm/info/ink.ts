@@ -1,6 +1,7 @@
 import { GraphQLApi } from '@universe/api'
-import { ETHEREUM_LOGO, ETH_LOGO } from 'ui/src/assets'
+import { ETH_LOGO, ETHEREUM_LOGO } from 'ui/src/assets'
 import { config } from 'uniswap/src/config'
+import { FRXUSD_INK, OUSDT_INK, USDCE_INK, USDT0_INK } from 'uniswap/src/constants/tokens'
 import {
   DEFAULT_MS_BEFORE_WARNING,
   DEFAULT_NATIVE_ADDRESS_LEGACY,
@@ -25,11 +26,15 @@ import { isWebApp } from 'utilities/src/platform'
 const LOCAL_INK_PLAYWRIGHT_RPC_URL = 'http://127.0.0.1:8548'
 const PRIMARY_INK_RPC_URL = config.inkRpcPrimary || 'https://rpc.kraken.com/ink'
 const FALLBACK_INK_RPC_URL = config.inkRpcFallback || ''
-const INK_USDC_ADDRESS = config.inkStablecoinAddress || '0x0000000000000000000000000000000000000000'
+const INK_USDC_ADDRESS = config.inkStablecoinAddress || '0x2D270e6886d130D724215A266106e6832161EAEd'
 
 const tokens = buildChainTokens({
   stables: {
     USDC: buildUSDC(INK_USDC_ADDRESS, UniverseChainId.Ink),
+    USDCe: USDCE_INK,
+    USDT0: USDT0_INK,
+    OUSDT: OUSDT_INK,
+    FRXUSD: FRXUSD_INK,
   },
 })
 
@@ -80,6 +85,7 @@ export const INK_CHAIN_INFO = {
     logo: ETH_LOGO,
   },
   networkLayer: NetworkLayer.L2,
+  testnet: false,
   pendingTransactionsRetryOptions: DEFAULT_RETRY_OPTIONS,
   rpcUrls,
   tokens,
@@ -87,8 +93,8 @@ export const INK_CHAIN_INFO = {
   defaultPoolHook,
   urlParam: 'ink',
   wrappedNativeCurrency: {
-    name: 'Wrapped Ink',
-    symbol: 'WINK',
+    name: 'Wrapped Ether',
+    symbol: 'WETH',
     decimals: 18,
     address: '0x4200000000000000000000000000000000000006',
   },

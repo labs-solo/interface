@@ -8,28 +8,34 @@ export default function useIsArgentWallet(): boolean {
   const account = useAccount()
 
   const preferredChainId = account.chainId ?? UniverseChainId.Ink
-  const detectorAddress =
-    ARGENT_WALLET_DETECTOR_ADDRESS[preferredChainId] ?? ARGENT_WALLET_DETECTOR_ADDRESS[UniverseChainId.Mainnet]
+  let detectorAddress = ARGENT_WALLET_DETECTOR_ADDRESS[preferredChainId]
+  if (!detectorAddress) {
+    detectorAddress = ARGENT_WALLET_DETECTOR_ADDRESS[UniverseChainId.Mainnet]
+  }
+
+  const readResult = useReadContract(
+    detectorAddress
+      ? {
+          address: assume0xAddress(detectorAddress),
+          abi: [
+            {
+              inputs: [{ internalType: 'address', name: '_wallet', type: 'address' }],
+              name: 'isArgentWallet',
+              outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+              stateMutability: 'view',
+              type: 'function',
+            },
+          ],
+          functionName: 'isArgentWallet',
+          args: account.address ? [account.address] : undefined,
+          query: { enabled: !!account.address },
+        }
+      : undefined,
+  )
 
   if (!detectorAddress) {
     return false
   }
 
-  return (
-    useReadContract({
-      address: assume0xAddress(detectorAddress),
-      abi: [
-        {
-          inputs: [{ internalType: 'address', name: '_wallet', type: 'address' }],
-          name: 'isArgentWallet',
-          outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
-          stateMutability: 'view',
-          type: 'function',
-        },
-      ],
-      functionName: 'isArgentWallet',
-      args: account.address ? [account.address] : undefined,
-      query: { enabled: !!account.address },
-    }).data ?? false
-  )
+  return readResult.data ?? false
 }

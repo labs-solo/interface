@@ -1,4 +1,4 @@
-import { PollingInterval } from 'appGraphql/data/util'
+import { getNativeTokenDBAddress, PollingInterval } from 'appGraphql/data/util'
 import { NetworkStatus } from '@apollo/client'
 import { Currency, CurrencyAmount, Price, Token, TradeType } from '@uniswap/sdk-core'
 import { GraphQLApi } from '@universe/api'
@@ -13,7 +13,6 @@ import { useIsSupportedChainId, useSupportedChainId } from 'uniswap/src/features
 import { UniverseChainId } from 'uniswap/src/features/chains/types'
 import { getPrimaryStablecoin, toGraphQLChain } from 'uniswap/src/features/chains/utils'
 import { isEVMChain } from 'uniswap/src/features/platforms/utils/chains'
-import { getNativeTokenDBAddress } from 'utils/nativeTokens'
 
 // ETH amounts used when calculating spot price for a given currency.
 // The amount is large enough to filter low liquidity pairs.

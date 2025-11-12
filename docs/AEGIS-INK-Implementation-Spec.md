@@ -201,6 +201,14 @@ Key points:
 - Unit tests verifying `getChainInfo(57073)` returns v4 addresses, `supportsV4` true, and injects `defaultPoolHook` metadata.
 - Regression tests asserting that pool-creation transactions always include the configured hook address (e.g., inspect emitted `PoolCreated` events in forked-playwright runs).
 
+### 7.4 Token metadata & token list ownership
+- **Swap / Send / Create Position selectors:** `TokenSelector` now queries the REST search service and automatically merges the Ink Velodrome token list when the backend does not understand chain `57073`. Users see VELO/USDC/etc. immediately without a manual import.
+- **Liquidity URL state & quick-select bases:** `COMMON_BASES[Ink]` includes `INK`, `WETH`, `USDC`, `USDC.e`, `USDT0`, `oUSDT`, `frxUSD`, `VELO`, and `OP`, so offline mode and Playwright fixtures keep working.
+- **Portfolio, Token Details, Send review screens:** still rely on `usePortfolioBalances` (GraphQL). Until the backend ingests Ink data, these surfaces will only render balances for tokens we can query directly from the wallet (on-chain reads).
+- **Token list artifact ownership:** edit `packages/uniswap/src/features/tokens/tokenLists/ink.ts` (source of truth) and re-run tests to regenerate/validate `apps/web/public/tokenlists/ink.velodrome.json`. The test suite fails if the JSON drifts from the TypeScript constant.
+- **Environment knobs:** `REACT_APP_INK_TOKEN_LIST_URL` can point to a hosted JSON (e.g., CDN or S3). `REACT_APP_INK_TOKEN_LIST_FALLBACK_URL` defaults to `/tokenlists/ink.velodrome.json` so local builds keep working offline. `REACT_APP_TOKEN_LIST_DEFAULT_CHAIN_IDS` includes `57073` so Ink lists autoload by default.
+- **Fetch/link monitoring:** token list downloads are cached, retries are logged via `logger`, and the UI falls back to the bundled list if every remote fetch fails.
+
 ---
 ## 8. Telemetry, Feature Flags, and Security
 - Ship a lightweight `@universe/gating` adapter that returns `false` for all Statsig flags unless an env var enables remote evaluation. This prevents runtime errors in components still calling `useFeatureFlag`.

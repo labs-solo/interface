@@ -15,6 +15,8 @@ declare module 'react-native-dotenv' {
   export const INK_RPC_FALLBACK: string
   export const INK_STABLECOIN_ADDRESS: string
   export const INK_DEFAULT_POOL_HOOK_ADDRESS: string
+  export const INK_TOKEN_LIST_URL: string
+  export const INK_TOKEN_LIST_FALLBACK_URL: string
   export const INCLUDE_PROTOTYPE_FEATURES: string
   export const INFURA_KEY: string
   export const IS_E2E_TEST: string
@@ -27,6 +29,7 @@ declare module 'react-native-dotenv' {
   export const STATSIG_PROXY_URL_OVERRIDE: string
   export const TRADING_API_KEY: string
   export const TRADING_API_URL_OVERRIDE: string
+  export const TOKEN_LIST_DEFAULT_CHAIN_IDS: string
   export const UNISWAP_API_KEY: string
   export const UNITAGS_API_URL_OVERRIDE: string
   export const WALLETCONNECT_PROJECT_ID: string

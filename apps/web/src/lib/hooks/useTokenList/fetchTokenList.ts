@@ -47,7 +47,7 @@ export default async function fetchTokenList({
     }
     urls = uriToHttpUrls(`${translatedUri}${parsedENS.ensPath ?? ''}`)
   } else {
-    urls = uriToHttpUrls(listUrl)
+    urls = uriToHttpUrls(listUrl, { allowLocalUri: true })
   }
 
   if (urls.length === 0) {
