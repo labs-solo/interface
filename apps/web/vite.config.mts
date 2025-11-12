@@ -102,6 +102,16 @@ export default defineConfig(({ mode }) => {
     Object.entries(env).map(([key, value]) => [`process.env.${key}`, JSON.stringify(value)]),
   )
 
+  const inspectorPortEnv = process.env.CLOUDFLARE_INSPECTOR_PORT?.trim()
+  const inspectorPortOverride =
+    inspectorPortEnv === undefined || inspectorPortEnv.length === 0
+      ? undefined
+      : inspectorPortEnv.toLowerCase() === 'false'
+        ? false
+        : Number.isFinite(Number(inspectorPortEnv))
+          ? Number(inspectorPortEnv)
+          : undefined
+
   return {
     root,
 
@@ -259,6 +269,7 @@ export default defineConfig(({ mode }) => {
                 : process.env.CLOUDFLARE_ENV === 'staging'
                   ? { name: 'app_staging' }
                   : undefined,
+            inspectorPort: inspectorPortOverride,
           })
         : undefined,
     ].filter(Boolean as unknown as <T>(x: T) => x is NonNullable<T>),

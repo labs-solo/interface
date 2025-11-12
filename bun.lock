@@ -1114,6 +1114,7 @@
     "multiformats@9.9.0": "patches/multiformats@9.9.0.patch",
     "react-native-reanimated@3.16.7": "patches/react-native-reanimated@3.16.7.patch",
     "@gorhom/bottom-sheet@4.6.4": "patches/@gorhom%2Fbottom-sheet@4.6.4.patch",
+    "@graphql-codegen/cli@3.3.1": "patches/@graphql-codegen%2Fcli@3.3.1.patch",
     "react-native-tab-view@3.5.2": "patches/react-native-tab-view@3.5.2.patch",
     "react-native-context-menu-view@1.15.0": "patches/react-native-context-menu-view@1.15.0.patch",
     "@tamagui/web@1.125.17": "patches/@tamagui%2Fweb@1.125.17.patch",

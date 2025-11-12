@@ -16,6 +16,46 @@ bun lfg
 bun web start
 ```
 
+### Step-by-step: running `apps/web` locally
+
+The current sandbox we used to validate this repo has a few extra requirements (Nx daemon sockets, patched GraphQL codegen, Cloudflare inspector conflicts). To reproduce the working setup exactly:
+
+1. **Use the pinned runtimes**
+   ```bash
+   source "$HOME/.nvm/nvm.sh" && nvm use 22.13.1
+   export PATH="$HOME/.bun/bin:$PATH"
+   bun --version # should print 1.3.1
+   ```
+2. **Create the writable temp folders Nx/Bun will use**
+   ```bash
+   mkdir -p .tmp/tmp .tmp/nx-sockets .tmp/bun-tmp .tmp/bun-home .tmp/logs
+   ```
+3. **Install dependencies + run `bun g:prepare` with daemon isolation disabled (and our Bun patch for `@graphql-codegen/cli` will auto-apply)**
+   ```bash
+   ROOT="$PWD" \
+   NX_DAEMON=false \
+   NX_ISOLATE_PLUGINS=false \
+   NX_SOCKET_DIR="$ROOT/.tmp/nx-sockets" \
+   BUN_TMPDIR="$ROOT/.tmp/bun-tmp" \
+   BUN_INSTALL="$ROOT/.tmp/bun-home" \
+   TMPDIR="$ROOT/.tmp/tmp" TMP="$ROOT/.tmp/tmp" TEMP="$ROOT/.tmp/tmp" \
+   bun install
+   ```
+4. **Start the dev server without the Cloudflare inspector (the sandbox can’t bind that debug port)**
+   ```bash
+   ROOT="$PWD" \
+   NX_DAEMON=false \
+   NX_ISOLATE_PLUGINS=false \
+   NX_SOCKET_DIR="$ROOT/.tmp/nx-sockets" \
+   BUN_TMPDIR="$ROOT/.tmp/bun-tmp" \
+   BUN_INSTALL="$ROOT/.tmp/bun-home" \
+   TMPDIR="$ROOT/.tmp/tmp" TMP="$ROOT/.tmp/tmp" TEMP="$ROOT/.tmp/tmp" \
+   CLOUDFLARE_INSPECTOR_PORT=false \
+   bun web dev
+   ```
+
+Once Vite prints the `Local:` URL (usually `http://localhost:3000`), open it in your browser—the UI should hot-reload normally.
+
 For instructions per application or package, see the README published for each application:
 
 - [Web](apps/web/README.md)

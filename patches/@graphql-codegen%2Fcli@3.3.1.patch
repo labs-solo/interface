@@ -1,0 +1,33 @@
+diff --git a/node_modules/@graphql-codegen/cli/.bun-tag-e40877b78c8ddc81 b/.bun-tag-e40877b78c8ddc81
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+diff --git a/cjs/codegen.js b/cjs/codegen.js
+index 7aea01961c4433b3e7d2c98c14aff83e56330ef4..a93e749660e72b775f4e601ed58e0c10832a12a5 100644
+--- a/cjs/codegen.js
++++ b/cjs/codegen.js
+@@ -300,7 +300,9 @@ async function executeCodegen(input) {
+                         exitOnError: false,
+                     };
+                 });
+-                return task.newListr(generateTasks, { concurrent: (0, os_1.cpus)().length });
++                const cpuInfo = (0, os_1.cpus)();
++                const maxConcurrency = Math.max((Array.isArray(cpuInfo) ? cpuInfo.length : 0), 1);
++                return task.newListr(generateTasks, { concurrent: maxConcurrency });
+             },
+         },
+     ], {
+diff --git a/esm/codegen.js b/esm/codegen.js
+index cd9cef0cd72e88700c403143506a18a5ab51c49e..27f93b9c3d4537f68299bf55a33dc2404cace3fa 100644
+--- a/esm/codegen.js
++++ b/esm/codegen.js
+@@ -296,7 +296,9 @@ export async function executeCodegen(input) {
+                         exitOnError: false,
+                     };
+                 });
+-                return task.newListr(generateTasks, { concurrent: cpus().length });
++                const cpuInfo = cpus();
++                const maxConcurrency = Math.max((Array.isArray(cpuInfo) ? cpuInfo.length : 0), 1);
++                return task.newListr(generateTasks, { concurrent: maxConcurrency });
+             },
+         },
+     ], {
