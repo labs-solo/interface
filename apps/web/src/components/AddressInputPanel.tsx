@@ -1,7 +1,7 @@
 import { AutoColumn } from 'components/deprecated/Column'
 import { RowBetween } from 'components/deprecated/Row'
 import { useAccount } from 'hooks/useAccount'
-import styled, { useTheme } from 'lib/styled-components'
+import styled, { useTheme } from 'lib/deprecated-styled-components'
 import { ChangeEvent, ReactNode, useCallback } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { ExternalLink } from 'theme/components/Links'

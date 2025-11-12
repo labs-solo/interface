@@ -1,5 +1,5 @@
 import { Currency } from '@uniswap/sdk-core'
-import { useTheme } from 'lib/styled-components'
+import { useTheme } from 'lib/deprecated-styled-components'
 import { PropsWithChildren } from 'react'
 import { ArrowLeft } from 'react-feather'
 import { Flex, ModalCloseIcon, styled, useSporeColors } from 'ui/src'

@@ -1,7 +1,7 @@
 import { Dropdown, InternalMenuItem } from 'components/Dropdowns/Dropdown'
 import { ChainLogo } from 'components/Logo/ChainLogo'
 import { useFilteredChainIds } from 'components/NetworkFilter/useFilteredChains'
-import { useTheme } from 'lib/styled-components'
+import { useTheme } from 'lib/deprecated-styled-components'
 import { ExploreTab } from 'pages/Explore/constants'
 import type { Dispatch, SetStateAction } from 'react'
 import { memo, useCallback, useState } from 'react'

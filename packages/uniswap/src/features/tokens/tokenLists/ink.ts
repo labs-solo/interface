@@ -107,7 +107,7 @@ const TOKEN_INFOS: TokenInfo[] = [
   },
   {
     chainId: UniverseChainId.Ink,
-    address: '0x80Eede496655FB9047dd39d9F418d5483ED600df',
+    address: '0x80Eede496655FB9047dd39d9f418d5483ED600df',
     name: 'Frax USD',
     symbol: 'frxUSD',
     decimals: 18,

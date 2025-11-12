@@ -1,5 +1,5 @@
 import { useActiveAddresses } from 'features/accounts/store/hooks'
-import styled, { useTheme } from 'lib/styled-components'
+import styled, { useTheme } from 'lib/deprecated-styled-components'
 import { ProviderConnectedView } from 'pages/Swap/Buy/ProviderConnectedView'
 import { ProviderConnectionError } from 'pages/Swap/Buy/ProviderConnectionError'
 import { ConnectingViewWrapper } from 'pages/Swap/Buy/shared'

@@ -1,4 +1,4 @@
-import { css } from 'lib/styled-components'
+import { css } from 'lib/deprecated-styled-components'
 import { TextStyle } from 'ui/src'
 
 /** @deprecated use tamagui and EllipsisTamaguiStyle instead */

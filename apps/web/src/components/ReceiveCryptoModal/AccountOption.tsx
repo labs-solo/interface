@@ -1,6 +1,6 @@
 import { AddressDisplay } from 'components/AccountDetails/AddressDisplay'
 import StatusIcon from 'components/StatusIcon'
-import styled from 'lib/styled-components'
+import styled from 'lib/deprecated-styled-components'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ThemedText } from 'theme/components'

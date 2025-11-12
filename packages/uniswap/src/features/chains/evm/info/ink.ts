@@ -1,7 +1,13 @@
 import { GraphQLApi } from '@universe/api'
 import { ETH_LOGO, ETHEREUM_LOGO } from 'ui/src/assets'
 import { config } from 'uniswap/src/config'
-import { FRXUSD_INK, OUSDT_INK, USDCE_INK, USDT0_INK } from 'uniswap/src/constants/tokens'
+import {
+  FRXUSD_INK,
+  INK_USDC_ADDRESS,
+  OUSDT_INK,
+  USDCE_INK,
+  USDT0_INK,
+} from 'uniswap/src/features/chains/evm/info/inkTokens'
 import {
   DEFAULT_MS_BEFORE_WARNING,
   DEFAULT_NATIVE_ADDRESS_LEGACY,
@@ -26,7 +32,6 @@ import { isWebApp } from 'utilities/src/platform'
 const LOCAL_INK_PLAYWRIGHT_RPC_URL = 'http://127.0.0.1:8548'
 const PRIMARY_INK_RPC_URL = config.inkRpcPrimary || 'https://rpc.kraken.com/ink'
 const FALLBACK_INK_RPC_URL = config.inkRpcFallback || ''
-const INK_USDC_ADDRESS = config.inkStablecoinAddress || '0x2D270e6886d130D724215A266106e6832161EAEd'
 
 const tokens = buildChainTokens({
   stables: {

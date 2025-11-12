@@ -1,5 +1,5 @@
 import { ChainOutageData } from 'featureFlags/flags/outageBanner'
-import { useTheme } from 'lib/styled-components'
+import { useTheme } from 'lib/deprecated-styled-components'
 import { useState } from 'react'
 import { Globe, X } from 'react-feather'
 import { Trans } from 'react-i18next'

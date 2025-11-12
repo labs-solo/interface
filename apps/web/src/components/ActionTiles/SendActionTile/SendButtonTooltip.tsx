@@ -1,5 +1,5 @@
 import Portal from '@reach/portal'
-import { useTheme } from 'lib/styled-components'
+import { useTheme } from 'lib/deprecated-styled-components'
 import { PropsWithChildren, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Flex, Text } from 'ui/src'

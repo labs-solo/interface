@@ -1,6 +1,6 @@
 import Column from 'components/deprecated/Column'
 import Row from 'components/deprecated/Row'
-import styled, { useTheme } from 'lib/styled-components'
+import styled, { useTheme } from 'lib/deprecated-styled-components'
 import { ReactNode } from 'react'
 import { Check } from 'react-feather'
 import type { To } from 'react-router'

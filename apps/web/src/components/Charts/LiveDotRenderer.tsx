@@ -1,4 +1,4 @@
-import { useTheme } from 'lib/styled-components'
+import { useTheme } from 'lib/deprecated-styled-components'
 import { useEffect, useRef, useState } from 'react'
 import { Flex } from 'ui/src'
 

@@ -1,4 +1,4 @@
-import styled, { css } from 'lib/styled-components'
+import styled, { css } from 'lib/deprecated-styled-components'
 import React, { HTMLProps, useCallback } from 'react'
 import { Link } from 'react-router'
 import { ClickableStyle } from 'theme/components/styles'

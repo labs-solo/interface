@@ -100,6 +100,10 @@ export function useEvent<T, S extends T, A extends unknown[]>(
 export function useEvent<A extends unknown[], R>(callback: (...args: A) => R): (...args: A) => R
 export function useEvent<A extends unknown[], R>(callback: (...args: A) => R): (...args: A) => R {
   const callbackRef = useRef(callback)
-  callbackRef.current = callback
+
+  useEffect(() => {
+    callbackRef.current = callback
+  }, [callback])
+
   return useCallback((...args: A) => callbackRef.current(...args), [])
 }

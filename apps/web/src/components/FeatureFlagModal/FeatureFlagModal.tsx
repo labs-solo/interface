@@ -11,7 +11,7 @@ import {
   useFeatureFlagWithExposureLoggingDisabled,
 } from '@universe/gating'
 import { useModalState } from 'hooks/useModalState'
-import styledDep from 'lib/styled-components'
+import styledDep from 'lib/deprecated-styled-components'
 import { useExternallyConnectableExtensionId } from 'pages/ExtensionPasskeyAuthPopUp/useExternallyConnectableExtensionId'
 import type { ChangeEvent, PropsWithChildren } from 'react'
 import { useCallback } from 'react'

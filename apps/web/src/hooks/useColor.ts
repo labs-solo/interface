@@ -1,6 +1,6 @@
 import { Currency } from '@uniswap/sdk-core'
 import { useCurrencyInfo } from 'hooks/Tokens'
-import { useTheme } from 'lib/styled-components'
+import { useTheme } from 'lib/deprecated-styled-components'
 import { useMemo } from 'react'
 import { useExtractedTokenColor } from 'ui/src'
 

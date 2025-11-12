@@ -1,7 +1,7 @@
 import Column from 'components/deprecated/Column'
 import { useModalInitialState } from 'hooks/useModalInitialState'
 import { ModalState } from 'hooks/useModalState'
-import styled, { useTheme } from 'lib/styled-components'
+import styled, { useTheme } from 'lib/deprecated-styled-components'
 import { Slash } from 'react-feather'
 import { Trans } from 'react-i18next'
 import { ThemedText } from 'theme/components'
