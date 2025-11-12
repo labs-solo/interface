@@ -58,7 +58,11 @@ export function isL2ChainId(chainId?: UniverseChainId): boolean {
 }
 
 export function isMainnetChainId(chainId?: UniverseChainId): boolean {
-  return chainId === UniverseChainId.Mainnet || chainId === UniverseChainId.Sepolia
+  return (
+    chainId === UniverseChainId.Mainnet ||
+    chainId === UniverseChainId.Ink ||
+    chainId === UniverseChainId.Sepolia
+  )
 }
 
 export function toGraphQLChain(chainId: UniverseChainId): GqlChainId {
@@ -81,6 +85,8 @@ export function fromGraphQLChain(chain: GraphQLApi.Chain | string | undefined): 
       return UniverseChainId.Blast
     case GraphQLApi.Chain.Celo:
       return UniverseChainId.Celo
+    case GraphQLApi.Chain.Ink:
+      return UniverseChainId.Ink
     case GraphQLApi.Chain.MonadTestnet:
       return UniverseChainId.MonadTestnet
     case GraphQLApi.Chain.Optimism:
@@ -130,6 +136,8 @@ export function fromUniswapWebAppLink(network: string | null): UniverseChainId {
       return UniverseChainId.Celo
     case GraphQLApi.Chain.MonadTestnet.toLowerCase():
       return UniverseChainId.MonadTestnet
+    case GraphQLApi.Chain.Ink.toLowerCase():
+      return UniverseChainId.Ink
     case GraphQLApi.Chain.Optimism.toLowerCase():
       return UniverseChainId.Optimism
     case GraphQLApi.Chain.Polygon.toLowerCase():
@@ -171,6 +179,8 @@ export function toUniswapWebAppLink(chainId: UniverseChainId): string | null {
       return GraphQLApi.Chain.Celo.toLowerCase()
     case UniverseChainId.MonadTestnet:
       return GraphQLApi.Chain.MonadTestnet.toLowerCase()
+    case UniverseChainId.Ink:
+      return GraphQLApi.Chain.Ink.toLowerCase()
     case UniverseChainId.Optimism:
       return GraphQLApi.Chain.Optimism.toLowerCase()
     case UniverseChainId.Polygon:
@@ -280,7 +290,7 @@ function getDefaultChainId({
     return UniverseChainId.Solana
   }
 
-  return isTestnetModeEnabled ? UniverseChainId.Sepolia : UniverseChainId.Mainnet
+  return isTestnetModeEnabled ? UniverseChainId.Sepolia : UniverseChainId.Ink
 }
 
 /** Returns all stablecoins for a given chainId. */

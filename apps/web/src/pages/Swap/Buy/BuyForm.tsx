@@ -186,7 +186,7 @@ function BuyFormInner({ disabled, initialCurrency }: BuyFormProps) {
       )
     } else if (currencyCode) {
       // Defaults the quote currency to the initial currency (from query params) if supported
-      const chainId = parsedQs.chainId ? Number(parsedQs.chainId) : UniverseChainId.Mainnet
+      const chainId = parsedQs.chainId ? Number(parsedQs.chainId) : UniverseChainId.Ink
       supportedToken = supportedTokens?.find(
         (meldToken) =>
           meldToken.currencyInfo?.currency.symbol === currencyCode &&
@@ -195,7 +195,7 @@ function BuyFormInner({ disabled, initialCurrency }: BuyFormProps) {
     } else {
       supportedToken =
         supportedTokens?.find((meldToken) =>
-          meldToken.currencyInfo?.currency.equals(nativeOnChain(UniverseChainId.Mainnet)),
+          meldToken.currencyInfo?.currency.equals(nativeOnChain(UniverseChainId.Ink)),
         ) ?? supportedTokens?.[0]
     }
 

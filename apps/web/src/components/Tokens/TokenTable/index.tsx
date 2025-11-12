@@ -173,7 +173,7 @@ function TokenTable({
         const delta1hrAbs = delta1hr !== undefined ? Math.abs(delta1hr) : undefined
         const delta1d = token.pricePercentChange1Day?.value
         const delta1dAbs = delta1d !== undefined ? Math.abs(delta1d) : undefined
-        const currCurrencyId = buildCurrencyId(fromGraphQLChain(token.chain) ?? UniverseChainId.Mainnet, token.address)
+        const currCurrencyId = buildCurrencyId(fromGraphQLChain(token.chain) ?? UniverseChainId.Ink, token.address)
         const tokenSortIndex = tokenSortRank[currCurrencyId]
         const chainId = getChainIdFromChainUrlParam(token.chain.toLowerCase())
         const unwrappedToken = chainId ? unwrapToken(chainId, token) : token

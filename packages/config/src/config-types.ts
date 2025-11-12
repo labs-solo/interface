@@ -20,6 +20,10 @@ export interface Config {
   isE2ETest: boolean
   forApiUrlOverride: string
   graphqlUrlOverride: string
+  inkRpcPrimary: string
+  inkRpcFallback: string
+  inkStablecoinAddress: string
+  inkDefaultPoolHookAddress: string
   includePrototypeFeatures: string
   infuraKey: string
   jupiterProxyUrl: string

@@ -38,7 +38,7 @@ export function BuyNativeTokenModal({
     return null
   }
 
-  const isMainnet = chainId === UniverseChainId.Mainnet
+  const isMainnet = chainId === UniverseChainId.Ink
   const chainName = getChainInfo(chainId).label
   const nativeTokenSymbol = nativeCurrencyInfo.currency.symbol ?? ''
   const nativeTokenName = nativeCurrencyInfo.currency.name ?? ''

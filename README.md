@@ -16,6 +16,19 @@ bun lfg
 bun web start
 ```
 
+### INK network configuration
+
+The UI defaults to the Kraken INK network. Provide the RPC + contract addresses via env vars so every app (web, extension, mobile) hits the correct infrastructure:
+
+| Purpose                | Web env var (`REACT_APP_…`)        | Native/extension env var |
+| ---------------------- | ---------------------------------- | ------------------------ |
+| Primary RPC endpoint   | `REACT_APP_INK_RPC_PRIMARY`        | `INK_RPC_PRIMARY`        |
+| Fallback RPC endpoint  | `REACT_APP_INK_RPC_FALLBACK`       | `INK_RPC_FALLBACK`       |
+| Wrapped stable address | `REACT_APP_INK_STABLECOIN_ADDRESS` | `INK_STABLECOIN_ADDRESS` |
+| Default v4 hook        | `REACT_APP_INK_DEFAULT_POOL_HOOK_ADDRESS` | `INK_DEFAULT_POOL_HOOK_ADDRESS` |
+
+At minimum set the primary RPC to a public HTTPS endpoint (for example `https://rpc.kraken.com/ink`). The stablecoin + hook addresses are used whenever the UI builds calldata for INK, so point them at the canonical contracts deployed for your environment.
+
 ### Step-by-step: running `apps/web` locally
 
 The current sandbox we used to validate this repo has a few extra requirements (Nx daemon sockets, patched GraphQL codegen, Cloudflare inspector conflicts). To reproduce the working setup exactly:

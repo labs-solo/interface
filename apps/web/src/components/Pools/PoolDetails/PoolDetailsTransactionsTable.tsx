@@ -85,7 +85,7 @@ export function PoolDetailsTransactionsTable({
   token1?: GraphQLApi.Token
   protocolVersion?: GraphQLApi.ProtocolVersion
 }) {
-  const chainId = useChainIdFromUrlParam() ?? UniverseChainId.Mainnet
+  const chainId = useChainIdFromUrlParam() ?? UniverseChainId.Ink
   const activeLocalCurrency = useAppFiatCurrency()
   const { convertFiatAmountFormatted, formatNumberOrString } = useLocalizationContext()
   const [filterModalIsOpen, toggleFilterModal] = useReducer((s) => !s, false)

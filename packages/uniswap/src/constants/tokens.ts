@@ -6,6 +6,7 @@ import { BASE_CHAIN_INFO } from 'uniswap/src/features/chains/evm/info/base'
 import { BLAST_CHAIN_INFO } from 'uniswap/src/features/chains/evm/info/blast'
 import { BNB_CHAIN_INFO } from 'uniswap/src/features/chains/evm/info/bnb'
 import { CELO_CHAIN_INFO } from 'uniswap/src/features/chains/evm/info/celo'
+import { INK_CHAIN_INFO } from 'uniswap/src/features/chains/evm/info/ink'
 import { MAINNET_CHAIN_INFO, SEPOLIA_CHAIN_INFO } from 'uniswap/src/features/chains/evm/info/mainnet'
 import { MONAD_CHAIN_INFO } from 'uniswap/src/features/chains/evm/info/monad'
 import { OPTIMISM_CHAIN_INFO } from 'uniswap/src/features/chains/evm/info/optimism'
@@ -155,6 +156,8 @@ export const { USDC: USDC_ZORA } = ZORA_CHAIN_INFO.tokens
 export const { USDC: USDC_WORLD_CHAIN } = WORLD_CHAIN_INFO.tokens
 
 export const { USDC: USDC_ZKSYNC } = ZKSYNC_CHAIN_INFO.tokens
+
+export const { USDC: USDC_INK } = INK_CHAIN_INFO.tokens
 
 export const WBTC = new Token(
   UniverseChainId.Mainnet,

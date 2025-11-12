@@ -9,7 +9,7 @@ import { currencyIdToChain, currencyIdToGraphQLAddress } from 'uniswap/src/utils
 // Converts CurrencyId to GraphQLApi.ContractInput format for GQL token queries
 export function currencyIdToContractInput(id: CurrencyId): GraphQLApi.ContractInput {
   return {
-    chain: toGraphQLChain(currencyIdToChain(id) ?? UniverseChainId.Mainnet),
+    chain: toGraphQLChain(currencyIdToChain(id) ?? UniverseChainId.Ink),
     address: currencyIdToGraphQLAddress(id) ?? undefined,
   }
 }
@@ -17,7 +17,7 @@ export function currencyIdToContractInput(id: CurrencyId): GraphQLApi.ContractIn
 // Converts CurrencyId to GraphQLApi.ContractInput format for Rest token queries
 export function currencyIdToRestContractInput(id: CurrencyId): RestContract {
   return {
-    chainId: currencyIdToChain(id) ?? UniverseChainId.Mainnet,
+    chainId: currencyIdToChain(id) ?? UniverseChainId.Ink,
     address: currencyIdToGraphQLAddress(id) ?? DEFAULT_NATIVE_ADDRESS,
   }
 }

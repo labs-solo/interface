@@ -35,6 +35,7 @@ export enum ElementName {
   ChainBNB = 'chain-bnb',
   ChainBlast = 'chain-blast',
   ChainCelo = 'chain-celo',
+  ChainInk = 'chain-ink',
   ChainEthereum = 'chain-ethereum',
   ChainMonadTestnet = 'chain-monad-testnet',
   ChainOptimism = 'chain-optimism',

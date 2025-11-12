@@ -33,7 +33,7 @@ export function SendFormModal(props: SendFormModalProps) {
   const inputCurrencyParam = searchParams.get('sendCurrency') ?? undefined
   const parsedInputCurrency = useCurrency({ address: inputCurrencyParam, chainId })
   const inputCurrency = useMemo(
-    () => parsedInputCurrency ?? nativeOnChain(UniverseChainId.Mainnet),
+    () => parsedInputCurrency ?? nativeOnChain(UniverseChainId.Ink),
     [parsedInputCurrency],
   )
 

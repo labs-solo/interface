@@ -73,7 +73,7 @@ type BuyFormContextType = {
   derivedBuyFormInfo: BuyInfo
 }
 
-export const ethCurrencyInfo = buildPartialCurrencyInfo(nativeOnChain(UniverseChainId.Mainnet))
+export const ethCurrencyInfo = buildPartialCurrencyInfo(nativeOnChain(UniverseChainId.Ink))
 const DEFAULT_BUY_FORM_STATE: BuyFormState = {
   inputAmount: '',
   inputInFiat: true,
@@ -118,7 +118,7 @@ function useDerivedBuyFormInfo(state: BuyFormState): BuyInfo {
   })
 
   const accountAddress = useActiveAddress(
-    state.quoteCurrency?.currencyInfo?.currency.chainId ?? UniverseChainId.Mainnet,
+    state.quoteCurrency?.currencyInfo?.currency.chainId ?? UniverseChainId.Ink,
   )
   const balance = useCurrencyBalance(accountAddress, state.quoteCurrency?.currencyInfo?.currency)
 

@@ -185,14 +185,14 @@ export function usePoolTransactions({
         const tokenIn = parseFloat(tx.token0Quantity) > 0 ? tx.token0 : tx.token1
         const token0Address =
           token0?.address === NATIVE_CHAIN_ID
-            ? WRAPPED_NATIVE_CURRENCY[chainId ?? UniverseChainId.Mainnet]?.address
+            ? WRAPPED_NATIVE_CURRENCY[chainId ?? UniverseChainId.Ink]?.address
             : token0?.address
         const isSell = areAddressesEqual({
           addressInput1: {
             address: tokenIn.address,
-            chainId: fromGraphQLChain(tokenIn.chain) ?? UniverseChainId.Mainnet,
+            chainId: fromGraphQLChain(tokenIn.chain) ?? UniverseChainId.Ink,
           },
-          addressInput2: { address: token0Address, chainId: chainId ?? UniverseChainId.Mainnet },
+          addressInput2: { address: token0Address, chainId: chainId ?? UniverseChainId.Ink },
         })
         const type =
           tx.type === GraphQLApi.PoolTransactionType.Swap

@@ -23,6 +23,7 @@ export enum UniverseChainId {
   Polygon = UniswapSDKChainId.POLYGON,
   Sepolia = UniswapSDKChainId.SEPOLIA,
   Soneium = UniswapSDKChainId.SONEIUM,
+  Ink = UniswapSDKChainId.INK,
   Unichain = UniswapSDKChainId.UNICHAIN,
   UnichainSepolia = UniswapSDKChainId.UNICHAIN_SEPOLIA,
   WorldChain = UniswapSDKChainId.WORLDCHAIN,
@@ -129,6 +130,11 @@ export interface UniverseChainInfo extends WagmiChain {
   readonly statusPage?: string
   readonly subblockTimeMs?: number // in milliseconds, used for subblock balance checks
   readonly supportsV4: boolean
+  readonly defaultPoolHook?: {
+    label: string
+    address: string
+    type: string
+  }
   readonly urlParam: string
   readonly wrappedNativeCurrency: {
     name: string // 'Wrapped Ether',

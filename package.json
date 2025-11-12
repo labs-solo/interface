@@ -211,6 +211,8 @@
     "@tamagui/web@1.125.17": "patches/@tamagui%2Fweb@1.125.17.patch",
     "@tamagui/z-index-stack@1.125.17": "patches/@tamagui%2Fz-index-stack@1.125.17.patch",
     "@vercel/og@0.5.8": "patches/@vercel%2Fog@0.5.8.patch",
-    "@graphql-codegen/cli@3.3.1": "patches/@graphql-codegen%2Fcli@3.3.1.patch"
+    "@graphql-codegen/cli@3.3.1": "patches/@graphql-codegen%2Fcli@3.3.1.patch",
+    "@uniswap/sdk-core@7.7.2": "patches/@uniswap%2Fsdk-core@7.7.2.patch",
+    "@uniswap/universal-router-sdk@4.19.5": "patches/@uniswap%2Funiversal-router-sdk@4.19.5.patch"
   }
 }

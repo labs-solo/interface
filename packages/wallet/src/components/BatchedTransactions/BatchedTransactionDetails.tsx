@@ -103,7 +103,7 @@ const CallCard = ({ call, width, chainId }: { call: Call; width: number; chainId
 
 export function BatchedTransactionDetails({
   calls,
-  chainId = UniverseChainId.Mainnet,
+  chainId = UniverseChainId.Ink,
   parentWidth,
 }: {
   calls: Call[]
@@ -317,7 +317,7 @@ interface BatchedRequestDetailsContentProps {
 }
 export const BatchedRequestDetailsContent = forwardRef<HTMLDivElement, BatchedRequestDetailsContentProps>(
   function BatchedRequestDetailsContent(
-    { calls, chainId = UniverseChainId.Mainnet }: BatchedRequestDetailsContentProps,
+    { calls, chainId = UniverseChainId.Ink }: BatchedRequestDetailsContentProps,
     ref,
   ): JSX.Element {
     const { t } = useTranslation()

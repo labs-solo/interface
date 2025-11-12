@@ -535,7 +535,7 @@ function V2PairMigration({
           <ExternalLink
             key="migration-contract"
             href={getExplorerLink({
-              chainId: account.chainId ?? UniverseChainId.Mainnet,
+              chainId: account.chainId ?? UniverseChainId.Ink,
               data: migrator?.address ?? '',
               type: ExplorerDataType.ADDRESS,
             })}

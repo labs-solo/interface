@@ -74,7 +74,7 @@ export function useTokenPriceHistory({
   const offChainData = priceData?.tokenProjects?.[0]?.markets?.[0]
 
   // We need to find the specific token for the chain we're viewing
-  const currentChain = toGraphQLChain(currencyIdToChain(currencyId) ?? UniverseChainId.Mainnet)
+  const currentChain = toGraphQLChain(currencyIdToChain(currencyId) ?? UniverseChainId.Ink)
   const currentChainToken = priceData?.tokenProjects?.[0]?.tokens.find((token) => token.chain === currentChain)
   const onChainData = currentChainToken?.market
 

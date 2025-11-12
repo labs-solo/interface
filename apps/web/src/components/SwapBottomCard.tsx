@@ -35,7 +35,7 @@ export function SwapBottomCard() {
 
   const isSupportedChain = useIsSupportedChainId(chainId)
 
-  const isBridgingSupportedChain = useIsBridgingChain(chainId ?? UniverseChainId.Mainnet)
+  const isBridgingSupportedChain = useIsBridgingChain(chainId ?? UniverseChainId.Ink)
 
   const isSwapPage = useIsPage(PageType.SWAP)
   const isSendPage = useIsPage(PageType.SEND)
@@ -113,6 +113,7 @@ interface ChainTheme {
 
 const CHAIN_THEME_LIGHT: Record<UniverseChainId, ChainTheme> = {
   [UniverseChainId.Mainnet]: { bgColor: '#6B8AFF33', textColor: '#6B8AFF' },
+  [UniverseChainId.Ink]: { bgColor: '#6B8AFF33', textColor: '#6B8AFF' },
   [UniverseChainId.ArbitrumOne]: { bgColor: '#00A3FF33', textColor: '#00A3FF' },
   [UniverseChainId.Avalanche]: { bgColor: '#E8414233', textColor: '#E84142' },
   [UniverseChainId.Base]: { bgColor: '#0052FF33', textColor: '#0052FF' },

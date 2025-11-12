@@ -198,6 +198,7 @@ enum Chain {
   POLYGON
   CELO
   BNB
+  INK
   BASE
   BLAST
   ZORA
@@ -1576,4 +1577,3 @@ type V4PoolTick {
   price0: String
   price1: String
 }
-

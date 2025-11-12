@@ -42,7 +42,7 @@ export async function signAndSubmitTransaction({
   const connectedSigner = signer.connect(provider)
   const hexRequest = hexlifyTransaction(request)
   const populatedRequest = await connectedSigner.populateTransaction(hexRequest)
-  const chainId = populatedRequest.chainId ?? UniverseChainId.Mainnet
+  const chainId = populatedRequest.chainId ?? UniverseChainId.Ink
 
   // For smart wallet transactions, check if the transaction needs delegation.
   // Cancellations should be excluded

@@ -291,7 +291,7 @@ export default function SendCurrencyInputForm({
             <Flex row alignItems="center" gap="$gap12">
               <Flex alignItems="center" row width="100%" gap="$gap12" onPress={() => setTokenSelectorOpen(true)}>
                 {inputCurrency && (
-                  <PortfolioLogo currencies={[inputCurrency]} size={36} chainId={chainId ?? UniverseChainId.Mainnet} />
+                  <PortfolioLogo currencies={[inputCurrency]} size={36} chainId={chainId ?? UniverseChainId.Ink} />
                 )}
                 <Flex row width="100%">
                   <Flex>

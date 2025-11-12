@@ -11,6 +11,10 @@ import {
   FOR_API_URL_OVERRIDE,
   GRAPHQL_URL_OVERRIDE,
   INCLUDE_PROTOTYPE_FEATURES,
+  INK_DEFAULT_POOL_HOOK_ADDRESS,
+  INK_RPC_FALLBACK,
+  INK_RPC_PRIMARY,
+  INK_STABLECOIN_ADDRESS,
   INFURA_KEY,
   IS_E2E_TEST,
   JUPITER_PROXY_URL,
@@ -56,6 +60,20 @@ export const getConfig = (): Config => {
     isE2ETest: process.env.IS_E2E_TEST?.toLowerCase() === 'true' || IS_E2E_TEST?.toLowerCase() === 'true',
     forApiUrlOverride: process.env.FOR_API_URL_OVERRIDE || FOR_API_URL_OVERRIDE,
     graphqlUrlOverride: process.env.GRAPHQL_URL_OVERRIDE || GRAPHQL_URL_OVERRIDE,
+    inkRpcPrimary:
+      process.env.REACT_APP_INK_RPC_PRIMARY || process.env.INK_RPC_PRIMARY || INK_RPC_PRIMARY || 'https://rpc.kraken.com/ink',
+    inkRpcFallback:
+      process.env.REACT_APP_INK_RPC_FALLBACK || process.env.INK_RPC_FALLBACK || INK_RPC_FALLBACK || '',
+    inkStablecoinAddress:
+      process.env.REACT_APP_INK_STABLECOIN_ADDRESS ||
+      process.env.INK_STABLECOIN_ADDRESS ||
+      INK_STABLECOIN_ADDRESS ||
+      '',
+    inkDefaultPoolHookAddress:
+      process.env.REACT_APP_INK_DEFAULT_POOL_HOOK_ADDRESS ||
+      process.env.INK_DEFAULT_POOL_HOOK_ADDRESS ||
+      INK_DEFAULT_POOL_HOOK_ADDRESS ||
+      '',
     infuraKey: process.env.REACT_APP_INFURA_KEY || INFURA_KEY,
     includePrototypeFeatures: process.env.INCLUDE_PROTOTYPE_FEATURES || INCLUDE_PROTOTYPE_FEATURES,
     jupiterProxyUrl: process.env.JUPITER_PROXY_URL || JUPITER_PROXY_URL,

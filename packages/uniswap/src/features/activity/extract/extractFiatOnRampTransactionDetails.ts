@@ -128,7 +128,7 @@ export function extractOnRampTransactionDetails(transaction: TransactionListQuer
     routing: TradingApi.Routing.CLASSIC,
     id: transaction.details.onRampTransfer.externalSessionId,
     // TODO: WALL-4919: Remove hardcoded Mainnet
-    chainId: fromGraphQLChain(transaction.chain) ?? UniverseChainId.Mainnet,
+    chainId: fromGraphQLChain(transaction.chain) ?? UniverseChainId.Ink,
     addedTime: transaction.timestamp * 1000, // convert to ms,
     status: remoteTxStatusToLocalTxStatus(GraphQLApi.TransactionType.OnRamp, transaction.details.status),
     from: transaction.details.receiverAddress, // This transaction is not on-chain, so use the receiver address as the from address

@@ -19,7 +19,7 @@ export function getInitialLogoUrl({
     : 'ethereum'
   const checksummedAddress = getValidAddress({
     address,
-    chainId: isUniverseChainId(chainId) ? chainId : UniverseChainId.Mainnet,
+    chainId: isUniverseChainId(chainId) ? chainId : UniverseChainId.Ink,
     withEVMChecksum: true,
   })
 

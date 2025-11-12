@@ -7,9 +7,17 @@ import { useReadContract } from 'wagmi'
 export default function useIsArgentWallet(): boolean {
   const account = useAccount()
 
+  const preferredChainId = account.chainId ?? UniverseChainId.Ink
+  const detectorAddress =
+    ARGENT_WALLET_DETECTOR_ADDRESS[preferredChainId] ?? ARGENT_WALLET_DETECTOR_ADDRESS[UniverseChainId.Mainnet]
+
+  if (!detectorAddress) {
+    return false
+  }
+
   return (
     useReadContract({
-      address: assume0xAddress(ARGENT_WALLET_DETECTOR_ADDRESS[account.chainId ?? UniverseChainId.Mainnet]),
+      address: assume0xAddress(detectorAddress),
       abi: [
         {
           inputs: [{ internalType: 'address', name: '_wallet', type: 'address' }],

@@ -21,6 +21,7 @@ import {
   USDC_BASE,
   USDC_BSC,
   USDC_CELO,
+  USDC_INK,
   USDC_MAINNET,
   USDC_OPTIMISM,
   USDC_POLYGON,
@@ -100,6 +101,11 @@ export const COMMON_BASES: ChainCurrencyList = {
   [UniverseChainId.Blast]: [
     nativeOnChain(UniverseChainId.Blast),
     WRAPPED_NATIVE_CURRENCY[UniverseChainId.Blast] as Token,
+  ].map(buildPartialCurrencyInfo),
+  [UniverseChainId.Ink]: [
+    nativeOnChain(UniverseChainId.Ink),
+    WRAPPED_NATIVE_CURRENCY[UniverseChainId.Ink] as Token,
+    USDC_INK,
   ].map(buildPartialCurrencyInfo),
 
   [UniverseChainId.Bnb]: [nativeOnChain(UniverseChainId.Bnb), DAI_BSC, USDC_BSC, USDT_BSC, ETH_BSC, BUSD_BSC].map(
@@ -198,7 +204,7 @@ export function getCommonBase(chainId?: number, address?: string): CurrencyInfo 
 }
 
 function getNativeLogoURI(chainId: UniverseChainId = UniverseChainId.Mainnet): ImageSourcePropType {
-  if (chainId === UniverseChainId.Mainnet) {
+  if (chainId === UniverseChainId.Mainnet || chainId === UniverseChainId.Ink) {
     return ETH_LOGO as ImageSourcePropType
   }
 

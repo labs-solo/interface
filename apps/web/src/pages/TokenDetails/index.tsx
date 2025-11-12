@@ -78,7 +78,7 @@ function useCreateTDPContext(): PendingTDPContext | LoadedTDPContext {
     throw new Error('Invalid token details route: token address URL param is undefined')
   }
 
-  const currencyChainInfo = getChainInfo(useChainIdFromUrlParam() ?? UniverseChainId.Mainnet)
+  const currencyChainInfo = getChainInfo(useChainIdFromUrlParam() ?? UniverseChainId.Ink)
 
   const isNative = tokenAddress === NATIVE_CHAIN_ID
 
