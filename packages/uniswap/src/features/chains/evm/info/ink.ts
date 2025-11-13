@@ -30,8 +30,8 @@ import { isPlaywrightEnv } from 'utilities/src/environment/env'
 import { isWebApp } from 'utilities/src/platform'
 
 const LOCAL_INK_PLAYWRIGHT_RPC_URL = 'http://127.0.0.1:8548'
-const PRIMARY_INK_RPC_URL = config.inkRpcPrimary || 'https://rpc.kraken.com/ink'
-const FALLBACK_INK_RPC_URL = config.inkRpcFallback || ''
+const PRIMARY_INK_RPC_URL = config.inkRpcPrimary || 'https://rpc-gel.inkonchain.com'
+const FALLBACK_INK_RPC_URL = config.inkRpcFallback || 'https://rpc-ten.inkonchain.com'
 
 const tokens = buildChainTokens({
   stables: {
@@ -51,14 +51,6 @@ const rpcUrls = isPlaywrightEnv()
       [RPCType.Interface]: { http: [PRIMARY_INK_RPC_URL] },
       ...(FALLBACK_INK_RPC_URL ? { [RPCType.Fallback]: { http: [FALLBACK_INK_RPC_URL] } } : {}),
     }
-
-const defaultPoolHook = config.inkDefaultPoolHookAddress
-  ? {
-      label: 'AEGIS Dynamic Fee Manager',
-      address: config.inkDefaultPoolHookAddress,
-      type: 'dynamic-fee',
-    }
-  : undefined
 
 export const INK_CHAIN_INFO = {
   id: UniverseChainId.Ink,
@@ -95,7 +87,6 @@ export const INK_CHAIN_INFO = {
   rpcUrls,
   tokens,
   supportsV4: true,
-  defaultPoolHook,
   urlParam: 'ink',
   wrappedNativeCurrency: {
     name: 'Wrapped Ether',

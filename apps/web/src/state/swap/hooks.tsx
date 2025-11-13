@@ -239,15 +239,13 @@ export function useInitialCurrencyState(): {
     return queryParametersToCurrencyState(parsedQs)
   }, [parsedQs])
 
-  const supportedChainId = useSupportedChainId(parsedCurrencyState.chainId ?? defaultChainId) ?? UniverseChainId.Ink
-  const supportedChainInfo = getChainInfo(supportedChainId)
-  const isSupportedChainCompatible = isTestnetModeEnabled === !!supportedChainInfo.testnet
+  const requestedChainId = parsedCurrencyState.chainId
+  const requestedChainInfo = requestedChainId !== undefined ? getChainInfo(requestedChainId) : undefined
+  const isRequestedChainCompatible =
+    requestedChainInfo === undefined ? true : isTestnetModeEnabled === !!requestedChainInfo.testnet
 
   const hasCurrencyQueryParams =
-    parsedCurrencyState.inputCurrencyAddress ||
-    parsedCurrencyState.outputCurrencyAddress ||
-    parsedCurrencyState.chainId ||
-    parsedCurrencyState.outputChainId
+    parsedCurrencyState.inputCurrencyAddress || parsedCurrencyState.outputCurrencyAddress
 
   useEffect(() => {
     if (parsedCurrencyState.inputCurrencyAddress || parsedCurrencyState.outputCurrencyAddress) {
@@ -255,34 +253,34 @@ export function useInitialCurrencyState(): {
     }
   }, [parsedCurrencyState.inputCurrencyAddress, parsedCurrencyState.outputCurrencyAddress, setIsUserSelectedToken])
 
+  const chainFromQuery = isRequestedChainCompatible ? requestedChainId : undefined
   // biome-ignore lint/correctness/useExhaustiveDependencies: We do not want to rerender on a change to persistedFilteredChainIds
   const { initialInputCurrencyAddress, initialChainId } = useMemo(() => {
-    // Default to native if no query params or chain is not compatible with testnet or mainnet mode
-    if (!hasCurrencyQueryParams || !isSupportedChainCompatible) {
-      const initialChainId = persistedFilteredChainIds?.input ?? defaultChainId
+    const fallbackChainId = persistedFilteredChainIds?.input ?? defaultChainId
+    const preferredChainId = chainFromQuery ?? fallbackChainId
+
+    if (!hasCurrencyQueryParams) {
       return {
-        initialInputCurrencyAddress: getNativeAddress(initialChainId),
-        initialChainId,
+        initialInputCurrencyAddress: getNativeAddress(preferredChainId),
+        initialChainId: preferredChainId,
       }
     }
-    // Handle query params or disconnected state
+
     if (parsedCurrencyState.inputCurrencyAddress) {
       return {
         initialInputCurrencyAddress: parsedCurrencyState.inputCurrencyAddress,
-        initialChainId: parsedCurrencyState.chainId ? supportedChainId : undefined,
+        initialChainId: preferredChainId,
       }
     }
-    // return ETH or parsedCurrencyState
+
     return {
-      initialInputCurrencyAddress: parsedCurrencyState.outputCurrencyAddress ? undefined : 'ETH',
-      initialChainId: parsedCurrencyState.chainId ? supportedChainId : undefined,
+      initialInputCurrencyAddress: undefined,
+      initialChainId: preferredChainId,
     }
   }, [
     hasCurrencyQueryParams,
-    isSupportedChainCompatible,
+    chainFromQuery,
     parsedCurrencyState.inputCurrencyAddress,
-    parsedCurrencyState.outputCurrencyAddress,
-    supportedChainId,
     defaultChainId,
   ])
 

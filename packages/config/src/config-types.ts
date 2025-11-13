@@ -23,7 +23,6 @@ export interface Config {
   inkRpcPrimary: string
   inkRpcFallback: string
   inkStablecoinAddress: string
-  inkDefaultPoolHookAddress: string
   inkTokenListUrl: string
   inkTokenListFallbackUrl: string
   includePrototypeFeatures: string

@@ -1,3 +1,4 @@
+const path = require('path')
 const { NODE_ENV } = process.env
 
 const inProduction = NODE_ENV === 'production'
@@ -35,7 +36,7 @@ module.exports = function (api) {
       {
         // ideally use envName here to add a mobile namespace but this doesn't work when sharing with dotenv-webpack
         moduleName: 'react-native-dotenv',
-        path: '../../.env.defaults', // must use this path so this file can be shared with web since dotenv-webpack is less flexible
+        path: path.resolve(__dirname, '../../.env.defaults'), // must use this path so this file can be shared with web since dotenv-webpack is less flexible
         safe: true,
         allowUndefined: false,
       },

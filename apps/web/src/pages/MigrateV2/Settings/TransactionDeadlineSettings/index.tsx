@@ -1,10 +1,10 @@
 import Row from 'components/deprecated/Row'
 import Expand from 'components/Expand'
 import QuestionHelper from 'components/QuestionHelper'
-import { DEFAULT_DEADLINE_FROM_NOW } from 'constants/misc'
+import { DEFAULT_DEADLINE_FROM_NOW, L2_DEADLINE_FROM_NOW } from 'constants/misc'
 import ms from 'ms'
 import { Input, InputContainer } from 'pages/MigrateV2/Settings/Input'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Trans } from 'react-i18next'
 import { useUserTransactionTTL } from 'state/user/hooks'
 import { ThemedText } from 'theme/components'
@@ -19,18 +19,25 @@ const NUMBERS_ONLY = /^[0-9\b]+$/
 export default function TransactionDeadlineSettings() {
   const [deadline, setDeadline] = useUserTransactionTTL()
 
-  const defaultInputValue = deadline && deadline !== DEFAULT_DEADLINE_FROM_NOW ? (deadline / 60).toString() : ''
+  const isDefaultDeadline =
+    deadline === DEFAULT_DEADLINE_FROM_NOW || deadline === L2_DEADLINE_FROM_NOW || deadline === undefined
+  const defaultInputValue = !isDefaultDeadline && deadline ? (deadline / 60).toString() : ''
 
   // If user has previously entered a custom deadline, we want to show that value in the input field
   // instead of a placeholder by defualt
   const [deadlineInput, setDeadlineInput] = useState(defaultInputValue)
+  const [lastValidDeadlineInput, setLastValidDeadlineInput] = useState(defaultInputValue)
   const [deadlineError, setDeadlineError] = useState<DeadlineError | false>(false)
 
   // If user has previously entered a custom deadline, we want to show the settings expanded by default.
   const [isOpen, setIsOpen] = useState(defaultInputValue.length > 0)
 
+  useEffect(() => {
+    setDeadlineInput(defaultInputValue)
+    setLastValidDeadlineInput(defaultInputValue)
+  }, [defaultInputValue])
+
   function parseCustomDeadline(value: string) {
-    // Do not allow non-numerical characters in the input field
     if (value.length > 0 && !NUMBERS_ONLY.test(value)) {
       return
     }
@@ -41,6 +48,7 @@ export default function TransactionDeadlineSettings() {
     // If the input is empty, set the deadline to the default
     if (value.length === 0) {
       setDeadline(DEFAULT_DEADLINE_FROM_NOW)
+      setLastValidDeadlineInput('')
       return
     }
 
@@ -51,6 +59,7 @@ export default function TransactionDeadlineSettings() {
         setDeadlineError(DeadlineError.InvalidInput)
       } else {
         setDeadline(parsed)
+        setLastValidDeadlineInput(value)
       }
     } catch {
       setDeadlineError(DeadlineError.InvalidInput)
@@ -79,10 +88,13 @@ export default function TransactionDeadlineSettings() {
             data-testid="deadline-input"
             placeholder={(DEFAULT_DEADLINE_FROM_NOW / 60).toString()}
             value={deadlineInput}
-            onChange={(e) => parseCustomDeadline(e.target.value)}
+            onChange={(e) => {
+              const sanitizedValue = e.target.value.replace(/[^\d]/g, '')
+              parseCustomDeadline(sanitizedValue)
+            }}
             onBlur={() => {
-              // When the input field is blurred, reset the input field to the current deadline
-              setDeadlineInput(defaultInputValue)
+              // When the input field is blurred, reset the input field to the latest valid deadline
+              setDeadlineInput(lastValidDeadlineInput)
               setDeadlineError(false)
             }}
           />

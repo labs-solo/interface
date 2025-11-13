@@ -3,6 +3,11 @@ import TransactionDeadlineSettings from 'pages/MigrateV2/Settings/TransactionDea
 import store from 'state'
 import { updateUserDeadline } from 'state/user/reducer'
 import { fireEvent, render, screen } from 'test-utils/render'
+import { vi } from 'vitest'
+
+vi.mock('hooks/useAccount', () => ({
+  useAccount: () => ({ chainId: undefined }),
+}))
 
 const renderTransactionDeadlineSettings = () => {
   render(<TransactionDeadlineSettings />)
@@ -37,7 +42,6 @@ describe('TransactionDeadlineSettings', () => {
       renderTransactionDeadlineSettings()
 
       fireEvent.change(getDeadlineInput(), { target: { value: '50' } })
-
       expect(screen.queryAllByText('50m').length).toEqual(1)
     })
     it('marks deadline as invalid if it is greater than 4320m (3 days) or 0m', () => {

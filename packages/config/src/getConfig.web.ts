@@ -20,11 +20,11 @@ export const getConfig = (): Config => {
     isE2ETest: process.env.IS_E2E_TEST?.toLowerCase() === 'true',
     forApiUrlOverride: process.env.FOR_API_URL_OVERRIDE || '',
     graphqlUrlOverride: process.env.GRAPHQL_URL_OVERRIDE || '',
-    inkRpcPrimary: process.env.REACT_APP_INK_RPC_PRIMARY || process.env.INK_RPC_PRIMARY || 'https://rpc.kraken.com/ink',
-    inkRpcFallback: process.env.REACT_APP_INK_RPC_FALLBACK || process.env.INK_RPC_FALLBACK || '',
+    inkRpcPrimary:
+      process.env.REACT_APP_INK_RPC_PRIMARY || process.env.INK_RPC_PRIMARY || 'https://rpc-gel.inkonchain.com',
+    inkRpcFallback:
+      process.env.REACT_APP_INK_RPC_FALLBACK || process.env.INK_RPC_FALLBACK || 'https://rpc-ten.inkonchain.com',
     inkStablecoinAddress: process.env.REACT_APP_INK_STABLECOIN_ADDRESS || process.env.INK_STABLECOIN_ADDRESS || '',
-    inkDefaultPoolHookAddress:
-      process.env.REACT_APP_INK_DEFAULT_POOL_HOOK_ADDRESS || process.env.INK_DEFAULT_POOL_HOOK_ADDRESS || '',
     inkTokenListUrl: process.env.REACT_APP_INK_TOKEN_LIST_URL || process.env.INK_TOKEN_LIST_URL || '',
     inkTokenListFallbackUrl:
       process.env.REACT_APP_INK_TOKEN_LIST_FALLBACK_URL ||

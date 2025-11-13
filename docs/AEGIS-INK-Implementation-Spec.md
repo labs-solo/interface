@@ -154,9 +154,9 @@ Key points:
     platform: Platform.EVM,
     supportsV4: true,
     rpcUrls: {
-      public: ['https://rpc.kraken.com/ink'],
+      public: ['https://rpc-gel.inkonchain.com'],
       fallback: ['https://ink.rpc.backup'],
-      interface: ['https://rpc.kraken.com/ink'],
+      interface: ['https://rpc-gel.inkonchain.com'],
     },
     explorer: {
       name: 'InkScan',
@@ -168,12 +168,6 @@ Key points:
       name: 'Wrapped Ink',
       symbol: 'WINK',
       address: '0x...'(TBD),
-    },
-    defaultPoolHook: {
-      label: 'AEGIS Dynamic Fee Manager',
-      address: '0xHOOK_DFM_ADDRESS',
-      type: 'dynamic-fee',
-      // allows future switch to Liquidity Engine without UI surgery
     },
     v4Addresses: {
       poolManager: '0x360e68faccca8ca495c1b759fd9eee466db9fb32',
@@ -198,8 +192,6 @@ Key points:
 
 ### 7.4 Testing
 - Add Playwright fixtures pointing to an INK fork (Anvil/Hardhat) seeded with tokens.
-- Unit tests verifying `getChainInfo(57073)` returns v4 addresses, `supportsV4` true, and injects `defaultPoolHook` metadata.
-- Regression tests asserting that pool-creation transactions always include the configured hook address (e.g., inspect emitted `PoolCreated` events in forked-playwright runs).
 
 ### 7.4 Token metadata & token list ownership
 - **Swap / Send / Create Position selectors:** `TokenSelector` now queries the REST search service and automatically merges the Ink Velodrome token list when the backend does not understand chain `57073`. Users see VELO/USDC/etc. immediately without a manual import.
@@ -279,3 +271,27 @@ Key points:
 6. **Sync strategy:** We fork from the latest public Universe release, keep `upstream/main` as a clean baseline, and isolate all AEGIS deltas (theme config, INK chain entry, route pruning) so merges boil down to reapplying a small, well-documented patch set. CI (Bun/Nx) enforces lint/type/test/build/Playwright on every PR so divergences are caught early.
 7. **Risk-managed rollout:** The WBS phases (audit → de-scope → theming → INK wiring → testing) each include explicit acceptance criteria and mitigations (e.g., verifying contract addresses via read calls, fallback to ERC20 approve when Permit2 absent, providing guidance for wallet network switching). “Done” requires a Playwright-validated end-to-end LP flow on INK plus CI green and documentation updated for GPL attribution and brand config usage.
 8. **Default hook requirement:** Pool creation is hard-wired to attach the AEGIS Dynamic Fee Manager hook (and later, the Liquidity Engine) so every pool launched from this interface inherits the dynamic fee behavior automatically; the UI no longer asks users to pick fee tiers, reducing footguns and guaranteeing hook adoption.
+
+---
+## 14. Service Catalog
+| Service | Purpose | Primary Usage in Repo | Access & Credential Guidance |
+| --- | --- | --- | --- |
+| **Uniswap API Gateway (REST + GraphQL)** | Canonical data plane for tokens, pools, portfolio info, and metadata. | `packages/uniswap/src/data/links.ts` wires Apollo HTTP/REST links consumed by portfolio, token search, and safety modules across `apps/web/src/state/**`. | Requires `UNISWAP_API_KEY` (set via env). Optional overrides: `API_BASE_URL_OVERRIDE`, `API_BASE_URL_V2_OVERRIDE`, `GRAPHQL_URL_OVERRIDE`. Secrets live in 1Password/Vault; never check in. |
+| **Data API Service (`data.v1.DataApiService`)** | High-volume ConnectRPC endpoints for positions, pools, and transactions. | `packages/uniswap/src/data/rest/*.ts` hooks (`useGetPositionQuery`, `usePoolsQuery`, `usePortfolioBalances`) via `uniswapGetTransport`. | Shares the same `UNISWAP_API_KEY`; base URL configurable through `API_BASE_URL_V2_OVERRIDE`. Ensure INK is enabled server-side before QA. |
+| **Explore Stats Service (`uniswap.explore.v1.ExploreStatsService`)** | Ranked token stats that power Trending/Top lists. | `packages/uniswap/src/data/rest/tokenRankings.ts`, `useTrendingTokensCurrencyInfos`, search modal no-query screens. | Uses Connect transport; no extra key beyond the core API. Ink falls back to `ink.velodrome.json` until the service supports chain `57073`. |
+| **Trading API (Labs)** | Quotes, UniswapX planning, LP lifecycle (create/increase/decrease/claim). | `packages/uniswap/src/data/apiClients/tradingApi/TradingApiClient.ts`, LP flows in `apps/web/src/pages/Positions/**`, Send/Swap hooks, Playwright fixtures. | Provide `TRADING_API_KEY`/`REACT_APP_TRADING_API_KEY`. Optional overrides: `TRADING_API_URL_OVERRIDE`, `TRADING_API_TEST_ENV`. Feature headers (`x-uniquote-enabled`, `x-viem-provider-enabled`, etc.) should stay disabled unless infra approves. |
+| **Gas Service (`/v1/gas-fee`) & TRM Screening (`/v1/screen`)** | Gas estimation fallback + sanctions checks pre-transaction. | `createFetchGasFee` and `fetchTrmScreen` inside `packages/uniswap/src/data/apiClients/uniswapApi/UniswapApiClient.ts`. | Both rely on `UNISWAP_API_KEY`. Client falls back to on-chain `estimateGas` if unset, but production must supply a key. |
+| **Fiat On/Off Ramp Aggregator (FOR Service)** | Quotes, widget URLs, and transaction polling for fiat flows. | `packages/uniswap/src/features/fiatOnRamp/api.ts`, `apps/web/src/state/fiatOnRampTransactions/updater.ts`, wallet mobile fiat flows. | Base URL overridable via `FOR_API_URL_OVERRIDE`. Authentication headers sourced from `FOR_API_HEADERS` (managed by Platform Eng). |
+| **Unitags API** | “@username” lookup + profile data for Send/Wallet UX. | `packages/uniswap/src/data/apiClients/unitagsApi/**`, `apps/web/src/state/send/hooks.tsx`, mobile unitag onboarding. | Uses session-scoped headers from the core API; optional `UNITAGS_API_URL_OVERRIDE` for staging. No standalone keys. |
+| **Scantastic Service** | Secure seedphrase sync (“Uwulink”) between devices. | `apps/mobile/src/features/scantastic/ScantasticModal.tsx`, deep-link sagas, extension docs. | Override via `SCANTASTIC_API_URL_OVERRIDE`. Requests must include the official `Origin` header; gate access with `FeatureFlags.Scantastic`. |
+| **Statsig Proxy** | Feature flag evaluation for residual `useFeatureFlag` hooks. | `packages/uniswap/src/features/gating/**`, `statsigBaseConfig`, all gating consumers. | Provide `STATSIG_API_KEY` plus optional `STATSIG_PROXY_URL_OVERRIDE`. Leaving blank forces local “all false” evaluation. |
+| **Amplitude Proxy / Analytics** | Telemetry events for web/mobile/extension when enabled. | `apps/web/src/tracing/amplitude.ts`, `apps/mobile/src/features/telemetry/saga.ts`, extension analytics helper. | Supply proxy URL via `AMPLITUDE_PROXY_URL_OVERRIDE` (else default `uniswapUrls.amplitudeProxyUrl`). Respect `brandConfig.telemetry.enabled` before initializing. |
+| **Embedded Wallet / Evervault Enclaves** | Passkey management and embedded wallet flows. | `packages/uniswap/src/constants/urls.ts` (`embeddedWalletUrl`, `passkeysManagementUrl`), `apps/web/public/csp.json`, embedded wallet store. | Hostnames are fixed (`embedded-wallet*.evervault.com`); secrets managed by Evervault—none stored in repo. Ensure CSP stays in sync to allow iframe loads. |
+| **WalletConnect Relays** | Session negotiation for WalletConnect v2 connections. | Wallet modal connectors (`apps/web/src/components/WalletModal/**`), mobile deep links, `useAccount` contexts. | Require `WALLETCONNECT_PROJECT_ID` (plus `_BETA`, `_DEV` as needed). Obtain from WalletConnect dashboard and store in 1Password. |
+| **RPC Provider Network (Alchemy/Infura/QuickNode + INK RPCs)** | Direct on-chain reads/writes, multicall, fallback providers. | `apps/web/src/constants/providers.ts`, `createEthersProvider`, wagmi config, `RPC_PROVIDERS`. | Keys via `REACT_APP_ALCHEMY_API_KEY`, `INFURA_KEY`, `REACT_APP_QUICKNODE_*`. Ink RPC overrides: `REACT_APP_INK_RPC_PRIMARY` / `_FALLBACK`. Keep secrets out of git; load via CI secrets. |
+| **Observability & Messaging (Datadog, OneSignal, Appsflyer)** | Error/metric logging, push notifications, marketing attribution. | Configured through `getConfig.(web|native).ts`; consumed by telemetry sagas/components. | Tokens provided via `DATADOG_CLIENT_TOKEN`, `ONESIGNAL_APP_ID`, `APPSFLYER_*`. Leave unset to disable in white-label builds. |
+
+**Credential Handling**
+- Secrets are stored in the Kraken Platform 1Password vault (or the agreed HashiCorp Vault) and injected via environment variables when running Bun/Nx tasks.
+- Local developers should source the `env/.example` template, then request read-only keys from Platform Engineering; production keys require security approval.
+- CI/CD pipelines (GitHub Actions, Jenkins, etc.) must mount secrets through the provider’s secret manager and export them as `REACT_APP_*` variables before executing `bun` commands.

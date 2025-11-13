@@ -14,7 +14,6 @@ declare module 'react-native-dotenv' {
   export const INK_RPC_PRIMARY: string
   export const INK_RPC_FALLBACK: string
   export const INK_STABLECOIN_ADDRESS: string
-  export const INK_DEFAULT_POOL_HOOK_ADDRESS: string
   export const INK_TOKEN_LIST_URL: string
   export const INK_TOKEN_LIST_FALLBACK_URL: string
   export const INCLUDE_PROTOTYPE_FEATURES: string

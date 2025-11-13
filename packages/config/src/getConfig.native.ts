@@ -12,7 +12,6 @@ import {
   GRAPHQL_URL_OVERRIDE,
   INCLUDE_PROTOTYPE_FEATURES,
   INFURA_KEY,
-  INK_DEFAULT_POOL_HOOK_ADDRESS,
   INK_RPC_FALLBACK,
   INK_RPC_PRIMARY,
   INK_STABLECOIN_ADDRESS,
@@ -67,17 +66,16 @@ export const getConfig = (): Config => {
       process.env.REACT_APP_INK_RPC_PRIMARY ||
       process.env.INK_RPC_PRIMARY ||
       INK_RPC_PRIMARY ||
-      'https://rpc.kraken.com/ink',
-    inkRpcFallback: process.env.REACT_APP_INK_RPC_FALLBACK || process.env.INK_RPC_FALLBACK || INK_RPC_FALLBACK || '',
+      'https://rpc-gel.inkonchain.com',
+    inkRpcFallback:
+      process.env.REACT_APP_INK_RPC_FALLBACK ||
+      process.env.INK_RPC_FALLBACK ||
+      INK_RPC_FALLBACK ||
+      'https://rpc-ten.inkonchain.com',
     inkStablecoinAddress:
       process.env.REACT_APP_INK_STABLECOIN_ADDRESS ||
       process.env.INK_STABLECOIN_ADDRESS ||
       INK_STABLECOIN_ADDRESS ||
-      '',
-    inkDefaultPoolHookAddress:
-      process.env.REACT_APP_INK_DEFAULT_POOL_HOOK_ADDRESS ||
-      process.env.INK_DEFAULT_POOL_HOOK_ADDRESS ||
-      INK_DEFAULT_POOL_HOOK_ADDRESS ||
       '',
     inkTokenListUrl:
       process.env.REACT_APP_INK_TOKEN_LIST_URL || process.env.INK_TOKEN_LIST_URL || INK_TOKEN_LIST_URL || '',
