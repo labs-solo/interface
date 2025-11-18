@@ -1,4 +1,5 @@
 import { toContractInput } from 'appGraphql/data/util'
+import { AddressZero } from '@ethersproject/constants'
 import { MULTICALL_ADDRESSES, NONFUNGIBLE_POSITION_MANAGER_ADDRESSES as V3NFT_ADDRESSES } from '@uniswap/sdk-core'
 import MulticallJSON from '@uniswap/v3-periphery/artifacts/contracts/lens/UniswapInterfaceMulticall.sol/UniswapInterfaceMulticall.json'
 import NFTPositionManagerJSON from '@uniswap/v3-periphery/artifacts/contracts/NonfungiblePositionManager.sol/NonfungiblePositionManager.json'
@@ -15,6 +16,7 @@ import { useIsSupportedChainIdCallback } from 'uniswap/src/features/chains/hooks
 import { UniverseChainId } from 'uniswap/src/features/chains/types'
 import { isEVMChain } from 'uniswap/src/features/platforms/utils/chains'
 import { getContract } from 'utilities/src/contracts/getContract'
+import { isEVMAddressWithChecksum } from 'utilities/src/addresses/evm/evm'
 import { CurrencyKey, currencyKey, currencyKeyFromGraphQL } from 'utils/currencyKey'
 
 type ContractMap<T extends BaseContract> = { [key: number]: T }
@@ -49,8 +51,9 @@ function useContractMultichain<T extends BaseContract>({
           : isSupported
             ? RPC_PROVIDERS[chainId]
             : undefined
-      if (provider) {
-        acc[chainId] = getContract({ address: addressMap[chainId] ?? '', ABI, provider }) as T
+      const address = addressMap[chainId]
+      if (provider && address && address !== AddressZero && isEVMAddressWithChecksum(address)) {
+        acc[chainId] = getContract({ address, ABI, provider }) as T
       }
       return acc
     }, {})

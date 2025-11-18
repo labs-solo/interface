@@ -32,7 +32,9 @@
     "paths": {
       "ui/src/*": ["../../packages/ui/src/*"],
       "utilities/src/*": ["../../packages/utilities/src/*"],
-      "uniswap/src/*": ["../../packages/uniswap/src/*"]
+      "uniswap/src/*": ["../../packages/uniswap/src/*"],
+      "styled-components": ["../../node_modules/styled-components"],
+      "styled-components/*": ["../../node_modules/styled-components/*"]
     }
   },
   "include": [

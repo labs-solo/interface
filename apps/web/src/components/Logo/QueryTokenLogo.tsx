@@ -12,7 +12,7 @@ export default function QueryTokenLogo(
     token?: TokenStat
   },
 ) {
-  const chainId = getChainIdFromChainUrlParam(props.token?.chain.toLowerCase()) ?? UniverseChainId.Mainnet
+  const chainId = getChainIdFromChainUrlParam(props.token?.chain.toLowerCase()) ?? UniverseChainId.Ink
   const isNative = props.token?.address === NATIVE_CHAIN_ID
 
   const nativeCurrency = useNativeCurrency(chainId)

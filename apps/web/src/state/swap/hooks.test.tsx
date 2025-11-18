@@ -50,8 +50,8 @@ describe('hooks', () => {
   beforeEach(() => {
     mocked(useEnabledChains).mockReturnValue({
       isTestnetModeEnabled: false,
-      defaultChainId: UniverseChainId.Mainnet,
-      chains: [UniverseChainId.Mainnet, UniverseChainId.Optimism],
+      defaultChainId: UniverseChainId.Ink,
+      chains: [UniverseChainId.Ink, UniverseChainId.Optimism],
       gqlChains: GQL_MAINNET_CHAINS,
     })
 

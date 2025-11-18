@@ -119,7 +119,7 @@ function TooltipAccountRow({ account }: { account: AccountItem }) {
               {shortenAddress({ address: account.address })}
             </Text>
             <NetworkLogo
-              chainId={account.platform === Platform.SVM ? UniverseChainId.Solana : UniverseChainId.Mainnet}
+              chainId={account.platform === Platform.SVM ? UniverseChainId.Solana : UniverseChainId.Ink}
               size={iconSizes.icon12}
             />
           </Flex>

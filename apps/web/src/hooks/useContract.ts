@@ -1,10 +1,5 @@
 import { Contract } from '@ethersproject/contracts'
-import {
-  CHAIN_TO_ADDRESSES_MAP,
-  MULTICALL_ADDRESSES,
-  NONFUNGIBLE_POSITION_MANAGER_ADDRESSES,
-  V3_MIGRATOR_ADDRESSES,
-} from '@uniswap/sdk-core'
+import { MULTICALL_ADDRESSES, NONFUNGIBLE_POSITION_MANAGER_ADDRESSES, V3_MIGRATOR_ADDRESSES } from '@uniswap/sdk-core'
 import IUniswapV2PairJson from '@uniswap/v2-core/build/IUniswapV2Pair.json'
 import UniswapInterfaceMulticallJson from '@uniswap/v3-periphery/artifacts/contracts/lens/UniswapInterfaceMulticall.sol/UniswapInterfaceMulticall.json'
 import NonfungiblePositionManagerJson from '@uniswap/v3-periphery/artifacts/contracts/NonfungiblePositionManager.sol/NonfungiblePositionManager.json'
@@ -21,6 +16,7 @@ import { WRAPPED_NATIVE_CURRENCY } from 'uniswap/src/constants/tokens'
 import { EVMUniverseChainId, UniverseChainId } from 'uniswap/src/features/chains/types'
 import { InterfaceEventName } from 'uniswap/src/features/telemetry/constants'
 import { sendAnalyticsEvent } from 'uniswap/src/features/telemetry/send'
+import { getV4Contracts } from 'uniswap/src/features/v4/addresses'
 import { getContract } from 'utilities/src/contracts/getContract'
 import { logger } from 'utilities/src/logger/logger'
 
@@ -155,12 +151,28 @@ export function useV4NFTPositionManagerContract(
   const account = useAccount()
   const chainIdToUse = chainId ?? account.chainId
 
+  const positionManagerAddress = useMemo(() => {
+    if (!chainIdToUse || chainIdToUse === UniverseChainId.MonadTestnet) {
+      return undefined
+    }
+
+    try {
+      const contracts = getV4Contracts(chainIdToUse as EVMUniverseChainId)
+      if (!contracts.positionManager) {
+        throw new Error(`V4 position manager not configured for chain ${chainIdToUse}`)
+      }
+      return contracts.positionManager
+    } catch (error) {
+      logger.warn('useContract', 'useV4NFTPositionManagerContract', 'Missing v4 position manager', {
+        error,
+        chainId: chainIdToUse,
+      })
+      return undefined
+    }
+  }, [chainIdToUse])
+
   const contract = useContract<Erc721>({
-    // monad testnet does not have v4 support
-    address:
-      chainIdToUse && chainIdToUse !== UniverseChainId.MonadTestnet
-        ? CHAIN_TO_ADDRESSES_MAP[chainIdToUse].v4PositionManagerAddress
-        : undefined,
+    address: positionManagerAddress,
     ABI: NFTPositionManagerABI,
     withSignerIfPossible,
     chainId: chainIdToUse,

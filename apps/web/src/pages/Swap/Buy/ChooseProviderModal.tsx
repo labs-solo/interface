@@ -68,7 +68,7 @@ function ChooseProviderModalContent({ closeModal }: ChooseProviderModal) {
     return getOnRampInputAmount({ rampDirection: 0, inputAmount, amountOut: amountOut ?? '0', inputInFiat })
   }, [inputAmount, amountOut, inputInFiat])
 
-  const recipientAddress = useActiveAddress(quoteCurrency?.currencyInfo?.currency.chainId ?? UniverseChainId.Mainnet)
+  const recipientAddress = useActiveAddress(quoteCurrency?.currencyInfo?.currency.chainId ?? UniverseChainId.Ink)
 
   const sortedQuotes = useMemo(() => {
     if (!quotes?.quotes) {

@@ -21,7 +21,7 @@ vi.mock('ui/src', () => ({
 }))
 
 // Mock styled-components
-vi.mock('lib/styled-components', () => ({
+vi.mock('lib/deprecated-styled-components', () => ({
   useTheme: () => ({}),
 }))
 

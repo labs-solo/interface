@@ -14,7 +14,7 @@ import { Cell } from 'components/Table/Cell'
 import { Filter } from 'components/Table/Filter'
 import { FilterHeaderRow, TableText, TimestampCell } from 'components/Table/styled'
 import { NATIVE_CHAIN_ID } from 'constants/tokens'
-import styled from 'lib/styled-components'
+import styled from 'lib/deprecated-styled-components'
 import { useMemo, useReducer, useRef, useState } from 'react'
 import { Trans } from 'react-i18next'
 import { ExternalLink } from 'theme/components/Links'
@@ -85,7 +85,7 @@ export function PoolDetailsTransactionsTable({
   token1?: GraphQLApi.Token
   protocolVersion?: GraphQLApi.ProtocolVersion
 }) {
-  const chainId = useChainIdFromUrlParam() ?? UniverseChainId.Mainnet
+  const chainId = useChainIdFromUrlParam() ?? UniverseChainId.Ink
   const activeLocalCurrency = useAppFiatCurrency()
   const { convertFiatAmountFormatted, formatNumberOrString } = useLocalizationContext()
   const [filterModalIsOpen, toggleFilterModal] = useReducer((s) => !s, false)

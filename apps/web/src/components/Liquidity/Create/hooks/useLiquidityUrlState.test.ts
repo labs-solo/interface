@@ -34,7 +34,7 @@ const useQueryStatesMock = mocked(useQueryStates)
 const useCurrencyWithLoadingMock = mocked(useCurrencyWithLoading)
 
 describe('useLiquidityUrlState', () => {
-  const defaultChainId = UniverseChainId.Mainnet
+  const defaultChainId = UniverseChainId.Ink
   const defaultInitialToken = nativeOnChain(defaultChainId)
 
   beforeEach(() => {

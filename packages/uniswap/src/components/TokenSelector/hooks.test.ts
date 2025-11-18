@@ -90,7 +90,7 @@ const favoriteTokens = [eth, dai, usdc_base]
 const favoriteTokenBalances = [ethBalance, daiBalance, usdcBaseBalance]
 
 const favoriteCurrencyIds = favoriteTokens.map((t) =>
-  buildCurrencyId(fromGraphQLChain(t.chain) ?? UniverseChainId.Mainnet, t.address),
+  buildCurrencyId(fromGraphQLChain(t.chain) ?? UniverseChainId.Ink, t.address),
 )
 
 const preloadedState: PreloadedState<UniswapState> = {
@@ -699,12 +699,12 @@ describe(useTrendingTokensOptions, () => {
     // Mock the currency info conversion function
     mockTokenRankingsStatToCurrencyInfo.mockImplementation((tokenRankingsStat: TokenRankingsStat) => ({
       currencyId: buildCurrencyId(
-        fromGraphQLChain(tokenRankingsStat.chain) ?? UniverseChainId.Mainnet,
+        fromGraphQLChain(tokenRankingsStat.chain) ?? UniverseChainId.Ink,
         tokenRankingsStat.address,
       ),
       currency: {
         address: tokenRankingsStat.address,
-        chainId: fromGraphQLChain(tokenRankingsStat.chain) ?? UniverseChainId.Mainnet,
+        chainId: fromGraphQLChain(tokenRankingsStat.chain) ?? UniverseChainId.Ink,
         name: tokenRankingsStat.name,
         symbol: tokenRankingsStat.symbol,
         decimals: tokenRankingsStat.decimals,

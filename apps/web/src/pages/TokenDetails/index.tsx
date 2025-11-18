@@ -1,4 +1,4 @@
-import { gqlToCurrency } from 'appGraphql/data/util'
+import { getNativeTokenDBAddress, gqlToCurrency } from 'appGraphql/data/util'
 import { GraphQLApi } from '@universe/api'
 import TokenDetails from 'components/Tokens/TokenDetails'
 import { useCreateTDPChartState } from 'components/Tokens/TokenDetails/ChartSection'
@@ -24,7 +24,6 @@ import { usePortfolioBalances } from 'uniswap/src/features/dataApi/balances/bala
 import { ModalName } from 'uniswap/src/features/telemetry/constants'
 import { buildCurrencyId, buildNativeCurrencyId, isNativeCurrencyAddress } from 'uniswap/src/utils/currencyId'
 import { useChainIdFromUrlParam } from 'utils/chainParams'
-import { getNativeTokenDBAddress } from 'utils/nativeTokens'
 
 /** Returns a map to store addresses and balances of the TDP token on other chains */
 function useMultiChainMap(tokenQuery: ReturnType<typeof GraphQLApi.useTokenWebQuery>) {
@@ -78,7 +77,7 @@ function useCreateTDPContext(): PendingTDPContext | LoadedTDPContext {
     throw new Error('Invalid token details route: token address URL param is undefined')
   }
 
-  const currencyChainInfo = getChainInfo(useChainIdFromUrlParam() ?? UniverseChainId.Mainnet)
+  const currencyChainInfo = getChainInfo(useChainIdFromUrlParam() ?? UniverseChainId.Ink)
 
   const isNative = tokenAddress === NATIVE_CHAIN_ID
 

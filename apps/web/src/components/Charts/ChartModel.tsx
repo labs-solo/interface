@@ -7,7 +7,7 @@ import { MissingDataBars } from 'components/Table/icons'
 import { useOnClickOutside } from 'hooks/useOnClickOutside'
 import { atom } from 'jotai'
 import { useUpdateAtom } from 'jotai/utils'
-import { DefaultTheme, useTheme } from 'lib/styled-components'
+import { DefaultTheme, useTheme } from 'lib/deprecated-styled-components'
 import {
   BarPrice,
   CrosshairMode,

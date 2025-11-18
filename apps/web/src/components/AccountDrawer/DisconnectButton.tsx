@@ -6,7 +6,7 @@ import { useAccountsStore, useActiveConnector, useActiveWallet } from 'features/
 import { ExternalWallet } from 'features/accounts/store/types'
 import { useDisconnect } from 'hooks/useDisconnect'
 import { useSignOutWithPasskey } from 'hooks/useSignOutWithPasskey'
-import { useTheme } from 'lib/styled-components'
+import { useTheme } from 'lib/deprecated-styled-components'
 import { PropsWithChildren, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'

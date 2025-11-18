@@ -20,6 +20,16 @@ export const getConfig = (): Config => {
     isE2ETest: process.env.IS_E2E_TEST?.toLowerCase() === 'true',
     forApiUrlOverride: process.env.FOR_API_URL_OVERRIDE || '',
     graphqlUrlOverride: process.env.GRAPHQL_URL_OVERRIDE || '',
+    inkRpcPrimary:
+      process.env.REACT_APP_INK_RPC_PRIMARY || process.env.INK_RPC_PRIMARY || 'https://rpc-gel.inkonchain.com',
+    inkRpcFallback:
+      process.env.REACT_APP_INK_RPC_FALLBACK || process.env.INK_RPC_FALLBACK || 'https://rpc-ten.inkonchain.com',
+    inkStablecoinAddress: process.env.REACT_APP_INK_STABLECOIN_ADDRESS || process.env.INK_STABLECOIN_ADDRESS || '',
+    inkTokenListUrl: process.env.REACT_APP_INK_TOKEN_LIST_URL || process.env.INK_TOKEN_LIST_URL || '',
+    inkTokenListFallbackUrl:
+      process.env.REACT_APP_INK_TOKEN_LIST_FALLBACK_URL ||
+      process.env.INK_TOKEN_LIST_FALLBACK_URL ||
+      '/tokenlists/ink.velodrome.json',
     infuraKey: process.env.REACT_APP_INFURA_KEY || '',
     includePrototypeFeatures: process.env.INCLUDE_PROTOTYPE_FEATURES || '',
     jupiterProxyUrl: process.env.REACT_APP_JUPITER_PROXY_URL || process.env.JUPITER_PROXY_URL || '',
@@ -35,6 +45,8 @@ export const getConfig = (): Config => {
     tradingApiWebTestEnv: process.env.REACT_APP_TRADING_API_TEST_ENV || '',
     uniswapApiKey: process.env.UNISWAP_API_KEY || '',
     unitagsApiUrlOverride: process.env.UNITAGS_API_URL_OVERRIDE || '',
+    tokenListDefaultChainIds:
+      process.env.REACT_APP_TOKEN_LIST_DEFAULT_CHAIN_IDS || process.env.TOKEN_LIST_DEFAULT_CHAIN_IDS || '57073',
     walletConnectProjectId:
       process.env.REACT_APP_WALLET_CONNECT_PROJECT_ID || process.env.WALLETCONNECT_PROJECT_ID || '',
     walletConnectProjectIdBeta: process.env.WALLETCONNECT_PROJECT_ID_BETA || '',

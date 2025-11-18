@@ -1,4 +1,4 @@
-import { useTheme } from 'lib/styled-components'
+import { useTheme } from 'lib/deprecated-styled-components'
 import { Flex } from 'ui/src'
 import { opacify } from 'ui/src/theme'
 

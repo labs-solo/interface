@@ -76,7 +76,7 @@
       }
     },
     "check:circular": {
-      "command": "concurrently \"../../scripts/check-circular-imports.sh ./src/pages/App.tsx 2\" \"../../scripts/check-circular-imports.sh ./src/setupTests.ts 0\"",
+      "command": "concurrently \"../../scripts/check-circular-imports.sh ./src/pages/App.tsx 0\" \"../../scripts/check-circular-imports.sh ./src/setupTests.ts 0\"",
       "options": {
         "cwd": "{projectRoot}"
       }

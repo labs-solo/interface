@@ -20,7 +20,7 @@ export const MultichainContext = createContext<MultichainContextType>({
   setSelectedChainId: () => undefined,
   isUserSelectedToken: false,
   setIsUserSelectedToken: () => undefined,
-  chainId: UniverseChainId.Mainnet,
-  initialChainId: UniverseChainId.Mainnet,
+  chainId: UniverseChainId.Ink,
+  initialChainId: UniverseChainId.Ink,
   isMultichainContext: false,
 })

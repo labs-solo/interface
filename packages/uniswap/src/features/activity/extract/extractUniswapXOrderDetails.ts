@@ -34,7 +34,7 @@ export function extractUniswapXOrderDetails(transaction: TransactionListQueryRes
     routing,
     id: transaction.details.id,
     // TODO: WALL-4919: Remove hardcoded Mainnet
-    chainId: fromGraphQLChain(transaction.chain) ?? UniverseChainId.Mainnet,
+    chainId: fromGraphQLChain(transaction.chain) ?? UniverseChainId.Ink,
     addedTime: transaction.timestamp * 1000, // convert to ms,
     status: remoteOrderStatusToLocalTxStatus(transaction.details.orderStatus),
     from: transaction.details.offerer, // This transaction is not on-chain, so use the offerer address as the from address

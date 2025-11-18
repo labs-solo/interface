@@ -22,6 +22,18 @@ import { isUniverseChainId } from 'uniswap/src/features/chains/utils'
 import { SolanaToken } from 'uniswap/src/features/tokens/SolanaToken'
 import { logger } from 'utilities/src/logger/logger'
 
+export {
+  ANITA_INK,
+  FRXUSD_INK,
+  KBTC_INK,
+  OP_INK,
+  OUSDT_INK,
+  USDC_INK,
+  USDCE_INK,
+  USDT0_INK,
+  VELO_INK,
+} from 'uniswap/src/features/chains/evm/info/inkTokens'
+
 export const { USDT: USDT_MONAD_TESTNET } = MONAD_CHAIN_INFO.tokens
 
 export const { USDC: USDC_SEPOLIA } = SEPOLIA_CHAIN_INFO.tokens

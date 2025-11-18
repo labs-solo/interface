@@ -29,7 +29,7 @@ function useCurrencyPreprocessing({
   const chainIdWithFallback =
     (typeof addressOrCurrency === 'string' ? chainId : addressOrCurrency?.chainId) ?? connectedChainId
   const supportedChainId = useSupportedChainId(chainIdWithFallback)
-  const nativeAddressWithFallback = getChainInfo(supportedChainId ?? UniverseChainId.Mainnet).nativeCurrency.address
+  const nativeAddressWithFallback = getChainInfo(supportedChainId ?? UniverseChainId.Ink).nativeCurrency.address
 
   const isNative = useMemo(() => checkIsNative(addressOrCurrency), [addressOrCurrency])
   const address = useMemo(
@@ -38,7 +38,7 @@ function useCurrencyPreprocessing({
   )
 
   const addressWithFallback = isNative || !address ? nativeAddressWithFallback : address
-  const currencyId = buildCurrencyId(supportedChainId ?? UniverseChainId.Mainnet, addressWithFallback)
+  const currencyId = buildCurrencyId(supportedChainId ?? UniverseChainId.Ink, addressWithFallback)
   const shouldSkip = !addressOrCurrency || skip
 
   return { currencyId, shouldSkip, addressOrCurrency }
@@ -156,7 +156,7 @@ export function useToken(tokenAddress?: string, chainId?: UniverseChainId): Mayb
 
   const formattedAddress = getValidAddress({
     address: tokenAddress,
-    chainId: chainId ?? connectedChainId ?? UniverseChainId.Mainnet,
+    chainId: chainId ?? connectedChainId ?? UniverseChainId.Ink,
     withEVMChecksum: true,
   })
   const currency = useCurrency({

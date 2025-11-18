@@ -1,4 +1,6 @@
 import { orderedTransportUrls } from 'components/Web3Provider/wagmiConfig'
+import { getChainInfo } from 'uniswap/src/features/chains/chainInfo'
+import { UniverseChainId } from 'uniswap/src/features/chains/types'
 
 // A minimal type that matches the structure returned by getChainInfo().
 type MockChain = {
@@ -91,5 +93,23 @@ describe('orderedTransportUrls', () => {
     // All four arrays have the same URL => only one unique entry
     expect(result).toHaveLength(1)
     expect(result).toEqual(['https://common.com'])
+  })
+
+  it('returns the configured INK RPC endpoints', () => {
+    const inkChain = getChainInfo(UniverseChainId.Ink)
+    const expected = Array.from(
+      new Set(
+        [
+          ...inkChain.rpcUrls.interface.http,
+          ...inkChain.rpcUrls.default.http,
+          ...(inkChain.rpcUrls.public?.http ?? []),
+          ...(inkChain.rpcUrls.fallback?.http ?? []),
+        ].filter((url): url is string => Boolean(url)),
+      ),
+    )
+
+    const result = orderedTransportUrls(inkChain as any)
+    expect(result).toEqual(expected)
+    expect(result.length).toBeGreaterThan(0)
   })
 })

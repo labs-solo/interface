@@ -119,6 +119,7 @@ describe('getEnabledChains', () => {
   it('returns all mainnet chains', () => {
     expect(getEnabledChains({ isTestnetModeEnabled: false, featureFlaggedChainIds: ALL_CHAIN_IDS })).toEqual({
       chains: [
+        UniverseChainId.Ink,
         UniverseChainId.Mainnet,
         UniverseChainId.Unichain,
         UniverseChainId.Solana,
@@ -136,6 +137,7 @@ describe('getEnabledChains', () => {
         UniverseChainId.Zksync,
       ],
       gqlChains: [
+        GraphQLApi.Chain.Ink,
         GraphQLApi.Chain.Ethereum,
         GraphQLApi.Chain.Unichain,
         GraphQLApi.Chain.Solana,
@@ -152,7 +154,7 @@ describe('getEnabledChains', () => {
         GraphQLApi.Chain.Zora,
         GraphQLApi.Chain.Zksync,
       ],
-      defaultChainId: UniverseChainId.Mainnet,
+      defaultChainId: UniverseChainId.Ink,
       isTestnetModeEnabled: false,
     })
   })
@@ -166,7 +168,7 @@ describe('getEnabledChains', () => {
     ).toEqual({
       chains: [UniverseChainId.Mainnet, UniverseChainId.Polygon],
       gqlChains: [GraphQLApi.Chain.Ethereum, GraphQLApi.Chain.Polygon],
-      defaultChainId: UniverseChainId.Mainnet,
+      defaultChainId: UniverseChainId.Ink,
       isTestnetModeEnabled: false,
     })
   })
@@ -216,7 +218,7 @@ describe('getEnabledChains', () => {
         GraphQLApi.Chain.AstrochainSepolia,
         GraphQLApi.Chain.MonadTestnet,
       ],
-      defaultChainId: UniverseChainId.Mainnet,
+      defaultChainId: UniverseChainId.Ink,
       isTestnetModeEnabled: false,
     })
   })

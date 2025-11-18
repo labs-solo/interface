@@ -6,6 +6,26 @@ import 'config/jest-presets/ui/ui-package-mocks'
 import { chrome } from 'jest-chrome'
 import { AppearanceSettingType } from 'wallet/src/features/appearance/slice'
 
+jest.mock('@datadog/browser-logs', () => ({
+  datadogLogs: {
+    init: jest.fn(),
+    logger: {
+      error: jest.fn(),
+      warn: jest.fn(),
+      info: jest.fn(),
+      debug: jest.fn(),
+      log: jest.fn(),
+    },
+  },
+}))
+
+jest.mock('@datadog/browser-rum', () => ({
+  datadogRum: {
+    addAction: jest.fn(),
+    addError: jest.fn(),
+  },
+}))
+
 process.env.IS_UNISWAP_EXTENSION = true
 
 const ignoreLogs = {

@@ -5,12 +5,29 @@ import { logger } from 'utilities/src/logger/logger'
  * @param uri to convert to fetch-able http url
  */
 export function uriToHttpUrls(uri: string, options?: { allowLocalUri?: boolean }): string[] {
-  const protocol = uri.split(':')[0]?.toLowerCase()
+  const [protocolSegment = ''] = uri.split(':')
+  const protocol = protocolSegment.toLowerCase()
 
   switch (protocol) {
     case uri: {
-      // If the result of protocol equals the uri, it means the uri has no protocol and is a local file (ie. a relative or absolute path).
-      return options?.allowLocalUri ? [uri] : []
+      if (!options?.allowLocalUri) {
+        return []
+      }
+
+      if (typeof window !== 'undefined') {
+        const origin = window.location.origin
+        if (!origin) {
+          return []
+        }
+
+        try {
+          return [new URL(uri, origin).href]
+        } catch (error) {
+          logger.debug('format/urls', 'uriToHttpUrls', 'Failed to resolve local URI', { error, uri })
+        }
+      }
+
+      return []
     }
     case 'data':
       return [uri]

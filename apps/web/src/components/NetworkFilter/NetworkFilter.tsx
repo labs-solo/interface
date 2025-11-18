@@ -1,7 +1,7 @@
 import { Dropdown, InternalMenuItem } from 'components/Dropdowns/Dropdown'
 import { ChainLogo } from 'components/Logo/ChainLogo'
 import { useFilteredChainIds } from 'components/NetworkFilter/useFilteredChains'
-import { useTheme } from 'lib/styled-components'
+import { useTheme } from 'lib/deprecated-styled-components'
 import { ExploreTab } from 'pages/Explore/constants'
 import type { Dispatch, SetStateAction } from 'react'
 import { memo, useCallback, useState } from 'react'
@@ -90,7 +90,7 @@ export default function NetworkFilter({
                 <NetworkLogo chainId={null} />
               ) : (
                 <ChainLogo
-                  chainId={currentChainId ?? UniverseChainId.Mainnet}
+                  chainId={currentChainId ?? UniverseChainId.Ink}
                   size={iconSizes.icon20}
                   testId={TestID.TokensNetworkFilterSelected}
                 />
@@ -181,7 +181,7 @@ const TableNetworkItem = memo(function TableNetworkItem({
           {isAllNetworks ? (
             <NetworkLogo chainId={null} />
           ) : (
-            <ChainLogo chainId={chainId ?? UniverseChainId.Mainnet} size={20} />
+            <ChainLogo chainId={chainId ?? UniverseChainId.Ink} size={20} />
           )}
           <ElementAfterText
             text={isAllNetworks ? t('transaction.network.all') : chainInfo.label}

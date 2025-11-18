@@ -8,6 +8,7 @@ import { ExploreTab } from 'pages/Explore/constants'
 import { TokenStat } from 'state/explore/types'
 import { ColorTokens } from 'ui/src'
 import { nativeOnChain, WRAPPED_NATIVE_CURRENCY } from 'uniswap/src/constants/tokens'
+import { getChainInfo } from 'uniswap/src/features/chains/chainInfo'
 import { GqlChainId, UniverseChainId } from 'uniswap/src/features/chains/types'
 import {
   fromGraphQLChain,
@@ -21,7 +22,6 @@ import { FORSupportedToken } from 'uniswap/src/features/fiatOnRamp/types'
 import { AVERAGE_L1_BLOCK_TIME_MS } from 'uniswap/src/features/transactions/hooks/usePollingIntervalByChain'
 import { areAddressesEqual } from 'uniswap/src/utils/addresses'
 import { getChainIdFromBackendChain, getChainIdFromChainUrlParam } from 'utils/chainParams'
-import { getNativeTokenDBAddress } from 'utils/nativeTokens'
 
 export enum PollingInterval {
   Slow = ms(`5m`),
@@ -111,6 +111,15 @@ export function supportedChainIdFromGQLChain(chain: GqlChainId): UniverseChainId
 export function supportedChainIdFromGQLChain(chain: GraphQLApi.Chain): UniverseChainId | undefined
 export function supportedChainIdFromGQLChain(chain: GraphQLApi.Chain): UniverseChainId | undefined {
   return isBackendSupportedChain(chain) ? (fromGraphQLChain(chain) ?? undefined) : undefined
+}
+
+export function getNativeTokenDBAddress(chain: GraphQLApi.Chain): string | undefined {
+  const pageChainId = supportedChainIdFromGQLChain(chain)
+  if (pageChainId === undefined) {
+    return undefined
+  }
+
+  return getChainInfo(pageChainId).backendChain.nativeTokenBackendAddress
 }
 
 export function getTokenExploreURL({ tab, chainUrlParam }: { tab: ExploreTab; chainUrlParam?: string }) {

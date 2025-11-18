@@ -20,6 +20,11 @@ export interface Config {
   isE2ETest: boolean
   forApiUrlOverride: string
   graphqlUrlOverride: string
+  inkRpcPrimary: string
+  inkRpcFallback: string
+  inkStablecoinAddress: string
+  inkTokenListUrl: string
+  inkTokenListFallbackUrl: string
   includePrototypeFeatures: string
   infuraKey: string
   jupiterProxyUrl: string
@@ -34,6 +39,7 @@ export interface Config {
   tradingApiWebTestEnv: string
   uniswapApiKey: string
   unitagsApiUrlOverride: string
+  tokenListDefaultChainIds: string
   walletConnectProjectId: string
   walletConnectProjectIdBeta: string
   walletConnectProjectIdDev: string

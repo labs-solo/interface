@@ -132,9 +132,7 @@ export function SendReviewModalInner({ onConfirm, isConfirming }: SendModalInner
           <SendModalHeader
             header={primaryInputView}
             subheader={secondaryInputView}
-            image={
-              <PortfolioLogo currencies={[inputCurrency]} size={36} chainId={chainId ?? UniverseChainId.Mainnet} />
-            }
+            image={<PortfolioLogo currencies={[inputCurrency]} size={36} chainId={chainId ?? UniverseChainId.Ink} />}
           />
           <SendModalHeader
             label={capitalize(t('common.to'))}
@@ -160,7 +158,7 @@ export function SendReviewModalInner({ onConfirm, isConfirming }: SendModalInner
             <Trans i18nKey="common.networkCost" />
           </ThemedText.BodySmall>
           <Flex row width="min-content" gap="$gap4" alignItems="center">
-            <ChainLogo chainId={chainId ?? UniverseChainId.Mainnet} size={16} />
+            <ChainLogo chainId={chainId ?? UniverseChainId.Ink} size={16} />
             <ThemedText.BodySmall>{gasFeeFormatted}</ThemedText.BodySmall>
           </Flex>
         </Flex>

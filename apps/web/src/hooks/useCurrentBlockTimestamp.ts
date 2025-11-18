@@ -18,7 +18,7 @@ export default function useCurrentBlockTimestamp({
   const account = useAccount()
 
   return useReadContract({
-    address: assume0xAddress(MULTICALL_ADDRESSES[account.chainId ?? UniverseChainId.Mainnet]),
+    address: assume0xAddress(MULTICALL_ADDRESSES[account.chainId ?? UniverseChainId.Ink]),
     abi: [
       {
         inputs: [],

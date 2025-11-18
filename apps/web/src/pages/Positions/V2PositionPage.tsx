@@ -85,7 +85,7 @@ function V2PositionPage() {
   const chainId = useChainIdFromUrlParam()
   const account = useAccount()
   const supportedAccountChainId = useSupportedChainId(account.chainId)
-  const chainInfo = getChainInfo(chainId ?? UniverseChainId.Mainnet)
+  const chainInfo = getChainInfo(chainId ?? UniverseChainId.Ink)
   const isMigrateV2Enabled = useFeatureFlag(FeatureFlags.MigrateV2)
 
   const {

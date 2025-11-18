@@ -10,7 +10,7 @@ import { StatPair, StatsWrapper, StatWrapper } from 'components/Tokens/TokenDeta
 import { Hr } from 'components/Tokens/TokenDetails/shared'
 import { NATIVE_CHAIN_ID } from 'constants/tokens'
 import { useCurrency } from 'hooks/Tokens'
-import deprecatedStyled from 'lib/styled-components'
+import deprecatedStyled from 'lib/deprecated-styled-components'
 import { ReactNode } from 'react'
 import { ChevronRight } from 'react-feather'
 import { Trans } from 'react-i18next'
@@ -274,7 +274,7 @@ function LoadingStats() {
 
 /* Loading State: row component with loading bubbles */
 function TokenDetailsSkeleton() {
-  const { id: chainId, urlParam } = getChainInfo(useChainIdFromUrlParam() ?? UniverseChainId.Mainnet)
+  const { id: chainId, urlParam } = getChainInfo(useChainIdFromUrlParam() ?? UniverseChainId.Ink)
   const { tokenAddress } = useParams<{ tokenAddress?: string }>()
   const token = useCurrency({
     address: tokenAddress === NATIVE_CHAIN_ID ? 'ETH' : tokenAddress,

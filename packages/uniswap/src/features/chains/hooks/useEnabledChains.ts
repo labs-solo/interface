@@ -12,7 +12,7 @@ import { selectIsTestnetModeEnabled } from 'uniswap/src/features/settings/select
 
 export function useIsModeMismatch(chainId?: UniverseChainId): boolean {
   const { isTestnetModeEnabled } = useEnabledChains()
-  return isTestnetChain(chainId ?? UniverseChainId.Mainnet) ? !isTestnetModeEnabled : isTestnetModeEnabled
+  return isTestnetChain(chainId ?? UniverseChainId.Ink) ? !isTestnetModeEnabled : isTestnetModeEnabled
 }
 
 export function useEnabledChains(options?: { platform?: Platform; includeTestnets?: boolean }): EnabledChainsInfo {

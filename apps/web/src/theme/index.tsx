@@ -1,4 +1,8 @@
-import { createGlobalStyle, css, ThemeProvider as StyledComponentsThemeProvider } from 'lib/styled-components'
+import {
+  createGlobalStyle,
+  css,
+  ThemeProvider as StyledComponentsThemeProvider,
+} from 'lib/deprecated-styled-components'
 import { PropsWithChildren, useMemo } from 'react'
 import { darkTheme, lightTheme, ThemeColors } from 'theme/colors'
 import { useIsDarkMode } from 'theme/components/ThemeToggle'

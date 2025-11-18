@@ -12,6 +12,11 @@ import {
   GRAPHQL_URL_OVERRIDE,
   INCLUDE_PROTOTYPE_FEATURES,
   INFURA_KEY,
+  INK_RPC_FALLBACK,
+  INK_RPC_PRIMARY,
+  INK_STABLECOIN_ADDRESS,
+  INK_TOKEN_LIST_FALLBACK_URL,
+  INK_TOKEN_LIST_URL,
   IS_E2E_TEST,
   JUPITER_PROXY_URL,
   ONESIGNAL_APP_ID,
@@ -20,6 +25,7 @@ import {
   SCANTASTIC_API_URL_OVERRIDE,
   STATSIG_API_KEY,
   STATSIG_PROXY_URL_OVERRIDE,
+  TOKEN_LIST_DEFAULT_CHAIN_IDS,
   TRADING_API_KEY,
   TRADING_API_URL_OVERRIDE,
   UNISWAP_API_KEY,
@@ -56,6 +62,28 @@ export const getConfig = (): Config => {
     isE2ETest: process.env.IS_E2E_TEST?.toLowerCase() === 'true' || IS_E2E_TEST?.toLowerCase() === 'true',
     forApiUrlOverride: process.env.FOR_API_URL_OVERRIDE || FOR_API_URL_OVERRIDE,
     graphqlUrlOverride: process.env.GRAPHQL_URL_OVERRIDE || GRAPHQL_URL_OVERRIDE,
+    inkRpcPrimary:
+      process.env.REACT_APP_INK_RPC_PRIMARY ||
+      process.env.INK_RPC_PRIMARY ||
+      INK_RPC_PRIMARY ||
+      'https://rpc-gel.inkonchain.com',
+    inkRpcFallback:
+      process.env.REACT_APP_INK_RPC_FALLBACK ||
+      process.env.INK_RPC_FALLBACK ||
+      INK_RPC_FALLBACK ||
+      'https://rpc-ten.inkonchain.com',
+    inkStablecoinAddress:
+      process.env.REACT_APP_INK_STABLECOIN_ADDRESS ||
+      process.env.INK_STABLECOIN_ADDRESS ||
+      INK_STABLECOIN_ADDRESS ||
+      '',
+    inkTokenListUrl:
+      process.env.REACT_APP_INK_TOKEN_LIST_URL || process.env.INK_TOKEN_LIST_URL || INK_TOKEN_LIST_URL || '',
+    inkTokenListFallbackUrl:
+      process.env.REACT_APP_INK_TOKEN_LIST_FALLBACK_URL ||
+      process.env.INK_TOKEN_LIST_FALLBACK_URL ||
+      INK_TOKEN_LIST_FALLBACK_URL ||
+      '/tokenlists/ink.velodrome.json',
     infuraKey: process.env.REACT_APP_INFURA_KEY || INFURA_KEY,
     includePrototypeFeatures: process.env.INCLUDE_PROTOTYPE_FEATURES || INCLUDE_PROTOTYPE_FEATURES,
     jupiterProxyUrl: process.env.JUPITER_PROXY_URL || JUPITER_PROXY_URL,
@@ -77,6 +105,11 @@ export const getConfig = (): Config => {
     tradingApiWebTestEnv: process.env.REACT_APP_TRADING_API_TEST_ENV || '',
     uniswapApiKey: process.env.UNISWAP_API_KEY || UNISWAP_API_KEY,
     unitagsApiUrlOverride: process.env.UNITAGS_API_URL_OVERRIDE || UNITAGS_API_URL_OVERRIDE,
+    tokenListDefaultChainIds:
+      process.env.REACT_APP_TOKEN_LIST_DEFAULT_CHAIN_IDS ||
+      process.env.TOKEN_LIST_DEFAULT_CHAIN_IDS ||
+      TOKEN_LIST_DEFAULT_CHAIN_IDS ||
+      '57073',
     walletConnectProjectId:
       process.env.REACT_APP_WALLET_CONNECT_PROJECT_ID ||
       process.env.WALLETCONNECT_PROJECT_ID ||

@@ -12,8 +12,11 @@ import {
   DAI_OPTIMISM,
   DAI_POLYGON,
   ETH_BSC,
+  FRXUSD_INK,
   nativeOnChain,
   OP,
+  OP_INK,
+  OUSDT_INK,
   PORTAL_ETH_CELO,
   UNI,
   USDC_ARBITRUM,
@@ -21,6 +24,7 @@ import {
   USDC_BASE,
   USDC_BSC,
   USDC_CELO,
+  USDC_INK,
   USDC_MAINNET,
   USDC_OPTIMISM,
   USDC_POLYGON,
@@ -31,6 +35,7 @@ import {
   USDC_WORLD_CHAIN,
   USDC_ZKSYNC,
   USDC_ZORA,
+  USDCE_INK,
   USDT,
   USDT_ARBITRUM_ONE,
   USDT_AVALANCHE,
@@ -38,6 +43,8 @@ import {
   USDT_MONAD_TESTNET,
   USDT_OPTIMISM,
   USDT_POLYGON,
+  USDT0_INK,
+  VELO_INK,
   WBTC,
   WBTC_ARBITRUM_ONE,
   WBTC_OPTIMISM,
@@ -100,6 +107,17 @@ export const COMMON_BASES: ChainCurrencyList = {
   [UniverseChainId.Blast]: [
     nativeOnChain(UniverseChainId.Blast),
     WRAPPED_NATIVE_CURRENCY[UniverseChainId.Blast] as Token,
+  ].map(buildPartialCurrencyInfo),
+  [UniverseChainId.Ink]: [
+    nativeOnChain(UniverseChainId.Ink),
+    WRAPPED_NATIVE_CURRENCY[UniverseChainId.Ink] as Token,
+    USDC_INK,
+    USDCE_INK,
+    USDT0_INK,
+    OUSDT_INK,
+    FRXUSD_INK,
+    VELO_INK,
+    OP_INK,
   ].map(buildPartialCurrencyInfo),
 
   [UniverseChainId.Bnb]: [nativeOnChain(UniverseChainId.Bnb), DAI_BSC, USDC_BSC, USDT_BSC, ETH_BSC, BUSD_BSC].map(
@@ -198,7 +216,7 @@ export function getCommonBase(chainId?: number, address?: string): CurrencyInfo 
 }
 
 function getNativeLogoURI(chainId: UniverseChainId = UniverseChainId.Mainnet): ImageSourcePropType {
-  if (chainId === UniverseChainId.Mainnet) {
+  if (chainId === UniverseChainId.Mainnet || chainId === UniverseChainId.Ink) {
     return ETH_LOGO as ImageSourcePropType
   }
 

@@ -16,6 +16,64 @@ bun lfg
 bun web start
 ```
 
+### INK network configuration
+
+The UI ships with Gelato’s public INK RPC (and a Tenderly fallback) so local builds work out of the box. Provide the RPC + contract addresses via env vars so every app (web, extension, mobile) hits the correct infrastructure:
+
+| Purpose                | Web env var (`REACT_APP_…`)        | Native/extension env var |
+| ---------------------- | ---------------------------------- | ------------------------ |
+| Primary RPC endpoint   | `REACT_APP_INK_RPC_PRIMARY`        | `INK_RPC_PRIMARY`        |
+| Fallback RPC endpoint  | `REACT_APP_INK_RPC_FALLBACK`       | `INK_RPC_FALLBACK`       |
+| Wrapped stable address | `REACT_APP_INK_STABLECOIN_ADDRESS` | `INK_STABLECOIN_ADDRESS` |
+| Ink token list URL     | `REACT_APP_INK_TOKEN_LIST_URL`     | `INK_TOKEN_LIST_URL`     |
+| Token list fallback URL| `REACT_APP_INK_TOKEN_LIST_FALLBACK_URL` | `INK_TOKEN_LIST_FALLBACK_URL` |
+| Token list default chains | `REACT_APP_TOKEN_LIST_DEFAULT_CHAIN_IDS` | `TOKEN_LIST_DEFAULT_CHAIN_IDS` |
+
+If the token list variables are omitted, the apps load the bundled `/tokenlists/ink.velodrome.json` artifact and
+autodetect Ink (`57073`) as a default chain for curated lists.
+
+At minimum set the primary RPC to a public HTTPS endpoint (for example `https://rpc-gel.inkonchain.com`). The stablecoin address is used whenever the UI builds calldata for INK, so point it at the canonical contract deployed for your environment.
+
+### Step-by-step: running `apps/web` locally
+
+The current sandbox we used to validate this repo has a few extra requirements (Nx daemon sockets, patched GraphQL codegen, Cloudflare inspector conflicts). To reproduce the working setup exactly:
+
+1. **Use the pinned runtimes**
+   ```bash
+   source "$HOME/.nvm/nvm.sh" && nvm use 22.13.1
+   export PATH="$HOME/.bun/bin:$PATH"
+   bun --version # should print 1.3.1
+   ```
+2. **Create the writable temp folders Nx/Bun will use**
+   ```bash
+   mkdir -p .tmp/tmp .tmp/nx-sockets .tmp/bun-tmp .tmp/bun-home .tmp/logs
+   ```
+3. **Install dependencies + run `bun g:prepare` with daemon isolation disabled (and our Bun patch for `@graphql-codegen/cli` will auto-apply)**
+   ```bash
+   ROOT="$PWD" \
+   NX_DAEMON=false \
+   NX_ISOLATE_PLUGINS=false \
+   NX_SOCKET_DIR="$ROOT/.tmp/nx-sockets" \
+   BUN_TMPDIR="$ROOT/.tmp/bun-tmp" \
+   BUN_INSTALL="$ROOT/.tmp/bun-home" \
+   TMPDIR="$ROOT/.tmp/tmp" TMP="$ROOT/.tmp/tmp" TEMP="$ROOT/.tmp/tmp" \
+   bun install
+   ```
+4. **Start the dev server without the Cloudflare inspector (the sandbox can’t bind that debug port)**
+   ```bash
+   ROOT="$PWD" \
+   NX_DAEMON=false \
+   NX_ISOLATE_PLUGINS=false \
+   NX_SOCKET_DIR="$ROOT/.tmp/nx-sockets" \
+   BUN_TMPDIR="$ROOT/.tmp/bun-tmp" \
+   BUN_INSTALL="$ROOT/.tmp/bun-home" \
+   TMPDIR="$ROOT/.tmp/tmp" TMP="$ROOT/.tmp/tmp" TEMP="$ROOT/.tmp/tmp" \
+   CLOUDFLARE_INSPECTOR_PORT=false \
+   bun web dev
+   ```
+
+Once Vite prints the `Local:` URL (usually `http://localhost:3000`), open it in your browser—the UI should hot-reload normally.
+
 For instructions per application or package, see the README published for each application:
 
 - [Web](apps/web/README.md)

@@ -117,9 +117,12 @@ export async function metaTagInjectionMiddleware(c: Context, next: Next): Promis
       return originalResponse
     }
 
-    // Clone the response to avoid consuming the body
-    const clonedResponse = originalResponse.clone()
-    const html = await clonedResponse.text()
+    const headers = new Headers(originalResponse.headers)
+    headers.delete('content-length')
+    headers.delete('content-encoding')
+
+    // Read the original body so we can reuse it (and avoid tee-ing the stream)
+    const html = await originalResponse.text()
 
     const exploreData = parseExplorePath(requestURL.pathname)
     let data: MetaTagInjectorInput
@@ -135,7 +138,11 @@ export async function metaTagInjectionMiddleware(c: Context, next: Next): Promis
       })
 
       if (!exploreMeta) {
-        return originalResponse
+        return new Response(html, {
+          status: originalResponse.status,
+          statusText: originalResponse.statusText,
+          headers,
+        })
       }
 
       data = exploreMeta
@@ -158,7 +165,7 @@ export async function metaTagInjectionMiddleware(c: Context, next: Next): Promis
     return new Response(modifiedHtml, {
       status: originalResponse.status,
       statusText: originalResponse.statusText,
-      headers: originalResponse.headers,
+      headers,
     })
   } catch {
     // next() has already been called, so we can just return the original response

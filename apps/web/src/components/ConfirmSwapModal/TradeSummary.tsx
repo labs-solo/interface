@@ -1,6 +1,6 @@
 import Row from 'components/deprecated/Row'
 import CurrencyLogo from 'components/Logo/CurrencyLogo'
-import { useTheme } from 'lib/styled-components'
+import { useTheme } from 'lib/deprecated-styled-components'
 import { ArrowRight } from 'react-feather'
 import { InterfaceTrade } from 'state/routing/types'
 import { ThemedText } from 'theme/components'

@@ -6055,7 +6055,7 @@ exports[`ReceiveScreen renders without error 1`] = `
                     class="font_button _display-inline _boxSizing-border-box _whiteSpace-pre-wrap _mt-0px _mr-0px _mb-0px _ml-0px _color-neutral1 _fontFamily-f-family _wordWrap-break-word _fontSize-f-size-smal108 _lineHeight-f-lineHeigh1269072494 _fontWeight-f-weight-me3083741"
                     data-disable-theme="true"
                   >
-                    13
+                    14
                      
                     networks
                   </span>
@@ -12142,7 +12142,7 @@ exports[`ReceiveScreen renders without error 1`] = `
                   class="font_button _display-inline _boxSizing-border-box _whiteSpace-pre-wrap _mt-0px _mr-0px _mb-0px _ml-0px _color-neutral1 _fontFamily-f-family _wordWrap-break-word _fontSize-f-size-smal108 _lineHeight-f-lineHeigh1269072494 _fontWeight-f-weight-me3083741"
                   data-disable-theme="true"
                 >
-                  13
+                  14
                    
                   networks
                 </span>

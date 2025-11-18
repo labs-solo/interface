@@ -1,6 +1,8 @@
 // This file is used only by jest in the test environment. To check the extension
 // build set up, see the webpack.config.js file.
 
+const path = require('path')
+
 module.exports = function (api) {
   api.cache.using(() => process.env.NODE_ENV)
   var plugins = [
@@ -9,7 +11,7 @@ module.exports = function (api) {
       'module:react-native-dotenv',
       {
         moduleName: 'react-native-dotenv',
-        path: '../../.env.defaults',
+        path: path.resolve(__dirname, '../../.env.defaults'),
         safe: true,
         allowUndefined: false,
       },
